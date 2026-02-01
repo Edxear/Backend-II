@@ -189,4 +189,3 @@ A: Sí, verifica `src/config/passport.js`
 
 **P: ¿Cuánto dura el login?**
 A: 24 horas (token expira)
-
