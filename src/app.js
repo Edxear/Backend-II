@@ -25,7 +25,7 @@ const DB_NAME = process.env.DB_NAME || 'integrative_practice';
 
 connDB(MONGODB_URI, DB_NAME);
 
-//Handlebars Config
+
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'handlebars');
@@ -43,7 +43,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-// Passport middleware
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
