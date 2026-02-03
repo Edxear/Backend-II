@@ -13,7 +13,7 @@ passport.use('register', new LocalStrategy({
     try {
         const { first_name, last_name, age } = req.body;
 
-        // Verificar si el usuario ya existe
+        // Verificación si el usuario ya existe
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return done(null, false, { message: 'El email ya está registrado' });
@@ -55,7 +55,7 @@ passport.use('login', new LocalStrategy({
             return done(null, adminUser);
         }
 
-        // Buscar usuario en la base de datos
+        // Buscar usuario en la BD.
         const user = await User.findOne({ email });
         if (!user) {
             return done(null, false, { message: 'Credenciales inválidas' });
@@ -81,20 +81,17 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
         callbackURL: process.env.GITHUB_CALLBACK_URL || "http://localhost:8080/api/sessions/github/callback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            // Buscar usuario por email de GitHub
             let user = await User.findOne({ email: profile.emails[0].value });
 
             if (user) {
-                // Si el usuario existe, actualizar información si es necesario
                 return done(null, user);
             } else {
-                // Crear nuevo usuario con datos de GitHub
                 const newUser = new User({
                     first_name: profile.displayName.split(' ')[0] || profile.username,
                     last_name: profile.displayName.split(' ').slice(1).join(' ') || '',
                     email: profile.emails[0].value,
-                    age: 0, // GitHub no proporciona edad
-                    password: '', // No necesitamos contraseña para OAuth
+                    age: 0, 
+                    password: '', 
                     role: 'usuario'
                 });
 
@@ -114,7 +111,6 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
     try {
-        // Para admin, devolver directamente
         if (id === 'adminCoder@coder.com') {
             const adminUser = {
                 first_name: 'Admin',

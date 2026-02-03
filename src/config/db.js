@@ -9,6 +9,6 @@ export const connDB = async (url, dbName) => {
         console.log('Database connected successfully');
     } catch (error) {
         console.error('Error connecting to database:', error.message);
-        process.exit(1); // Terminar la aplicación si no se puede conectar
+        process.exit(1); 
     }
 }       

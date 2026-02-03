@@ -1,32 +1,27 @@
-import { Router } from 'express';
 import jwt from 'jsonwebtoken';
+import CustomRouter from '../utils/customRouter.js';
 import UserDBManager from '../dao/userDBManager.js';
+import { handlePolicies } from '../middleware/auth.js';
 
-const router = Router();
+const custom = new CustomRouter();
 const userManager = new UserDBManager();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // POST /api/users/register - Registrar nuevo usuario
-router.post('/register', async (req, res) => {
+custom.post('/register', async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body;
 
         // Validar que todos los campos estén presentes
         if (!first_name || !last_name || !email || !password) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'All fields are required' 
-            });
+            return res.sendUserError('All fields are required', 400);
         }
 
         // Verificar si el usuario ya existe
         const existingUser = await userManager.findByEmail(email);
         if (existingUser) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'User already exists' 
-            });
+            return res.sendUserError('User already exists', 400);
         }
 
         // Crear nuevo usuario
@@ -38,8 +33,7 @@ router.post('/register', async (req, res) => {
             role: 'user'
         });
 
-        res.status(201).json({
-            success: true,
+        res.sendCreated({
             message: 'User registered successfully',
             user: {
                 id: newUser._id,
@@ -51,42 +45,39 @@ router.post('/register', async (req, res) => {
         });
     } catch (error) {
         console.error('Register error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Error registering user' 
-        });
+        res.sendServerError('Error registering user');
     }
 });
 
 // POST /api/users/login - Login y generar JWT
-router.post('/login', async (req, res) => {
+custom.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
         // Validar que email y password estén presentes
         if (!email || !password) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Email and password are required' 
-            });
+            return res.sendUserError('Email and password are required', 400);
         }
 
         // Buscar usuario por email
         const user = await userManager.findByEmail(email);
         if (!user) {
-            return res.redirect('/login?error=Login failed!');
+            // Mantener compatibilidad con redirección para vistas
+            if (req.headers.accept && req.headers.accept.includes('text/html')) return res.redirect('/login?error=Login failed!');
+            return res.sendUserError('Login failed', 401);
         }
 
         // Validar contraseña
         const isPasswordValid = await userManager.validatePassword(user, password);
         if (!isPasswordValid) {
-            return res.redirect('/login?error=Login failed!');
+            if (req.headers.accept && req.headers.accept.includes('text/html')) return res.redirect('/login?error=Login failed!');
+            return res.sendUserError('Login failed', 401);
         }
 
         // Generar JWT
         const token = jwt.sign(
             {
-                id: user._id,
+                id: user._id.toString(),
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
@@ -103,133 +94,102 @@ router.post('/login', async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000 // 24 horas
         });
 
-        // Redirigir a /current
-        res.redirect('/current');
+        // Redirigir a /current para flujo de vistas
+        return res.redirect('/current');
     } catch (error) {
         console.error('Login error:', error);
-        res.redirect('/login?error=Login failed!');
+        if (req.headers.accept && req.headers.accept.includes('text/html')) return res.redirect('/login?error=Login failed!');
+        res.sendServerError('Login failed');
     }
 });
 
-// GET /api/users - Obtener todos los usuarios
-router.get('/', async (req, res) => {
+// GET /api/users - Obtener todos los usuarios (admin only)
+custom.get('/', ['admin'], async (req, res) => {
     try {
         const users = await userManager.findAll();
-        res.json({
-            success: true,
-            users: users.map(user => ({
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                role: user.role
-            }))
-        });
+        res.sendSuccess({ users: users.map(user => ({
+            id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            role: user.role
+        })) });
     } catch (error) {
         console.error('Get users error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Error fetching users' 
-        });
+        res.sendServerError('Error fetching users');
     }
 });
 
-// GET /api/users/:id - Obtener usuario por ID
-router.get('/:id', async (req, res) => {
+// GET /api/users/:id - Obtener usuario por ID (admin or self)
+custom.get('/:id', async (req, res) => {
     try {
-        const user = await userManager.findById(req.params.id);
-        if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User not found' 
-            });
-        }
-        res.json({
-            success: true,
-            user: {
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                role: user.role
-            }
-        });
+        if (!req.user) return res.sendUserError('Unauthorized', 401);
+        const requestedId = req.params.id;
+        if (req.user.role !== 'admin' && req.user.id !== requestedId) return res.sendUserError('Forbidden', 403);
+
+        const user = await userManager.findById(requestedId);
+        if (!user) return res.sendUserError('User not found', 404);
+
+        res.sendSuccess({ user: {
+            id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            role: user.role
+        } });
     } catch (error) {
         console.error('Get user error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Error fetching user' 
-        });
+        res.sendServerError('Error fetching user');
     }
 });
 
-// PUT /api/users/:id - Actualizar usuario
-router.put('/:id', async (req, res) => {
+// PUT /api/users/:id - Actualizar usuario (admin or self)
+custom.put('/:id', async (req, res) => {
     try {
+        if (!req.user) return res.sendUserError('Unauthorized', 401);
+        const requestedId = req.params.id;
+        if (req.user.role !== 'admin' && req.user.id !== requestedId) return res.sendUserError('Forbidden', 403);
+
         const { first_name, last_name, email, role } = req.body;
         const updateData = {};
 
         if (first_name) updateData.first_name = first_name;
         if (last_name) updateData.last_name = last_name;
         if (email) updateData.email = email;
-        if (role) updateData.role = role;
+        if (role && req.user.role === 'admin') updateData.role = role; // only admin can change role
 
-        const updatedUser = await userManager.update(req.params.id, updateData);
-        if (!updatedUser) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User not found' 
-            });
-        }
+        const updatedUser = await userManager.update(requestedId, updateData);
+        if (!updatedUser) return res.sendUserError('User not found', 404);
 
-        res.json({
-            success: true,
-            message: 'User updated successfully',
-            user: {
-                id: updatedUser._id,
-                first_name: updatedUser.first_name,
-                last_name: updatedUser.last_name,
-                email: updatedUser.email,
-                role: updatedUser.role
-            }
-        });
+        res.sendSuccess({ message: 'User updated successfully', user: {
+            id: updatedUser._id,
+            first_name: updatedUser.first_name,
+            last_name: updatedUser.last_name,
+            email: updatedUser.email,
+            role: updatedUser.role
+        } });
     } catch (error) {
         console.error('Update user error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Error updating user' 
-        });
+        res.sendServerError('Error updating user');
     }
 });
 
-// DELETE /api/users/:id - Eliminar usuario
-router.delete('/:id', async (req, res) => {
+// DELETE /api/users/:id - Eliminar usuario (admin only)
+custom.delete('/:id', ['admin'], async (req, res) => {
     try {
         const deletedUser = await userManager.delete(req.params.id);
-        if (!deletedUser) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'User not found' 
-            });
-        }
-
-        res.json({
-            success: true,
-            message: 'User deleted successfully'
-        });
+        if (!deletedUser) return res.sendUserError('User not found', 404);
+        res.sendSuccess({ message: 'User deleted successfully' });
     } catch (error) {
         console.error('Delete user error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Error deleting user' 
-        });
+        res.sendServerError('Error deleting user');
     }
 });
 
 // POST /api/users/logout - Logout
-router.post('/logout', (req, res) => {
+custom.post('/logout', (req, res) => {
     res.clearCookie('currentUser');
-    res.json({ success: true, message: 'Logged out successfully' });
+    res.sendSuccess({ message: 'Logged out successfully' });
 });
 
-export default router;
+export default custom.getRouter();

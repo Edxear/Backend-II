@@ -1,95 +1,77 @@
-import { Router } from 'express';
+import CustomRouter from '../utils/customRouter.js';
 import { productDBManager } from '../dao/productDBManager.js';
 import { uploader } from '../utils/multerUtil.js';
 
-const router = Router();
+const custom = new CustomRouter();
 const ProductService = new productDBManager();
 
-router.get('/', async (req, res) => {
-    const result = await ProductService.getAllProducts(req.query);
-
-    res.send({
-        status: 'success',
-        payload: result
-    });
+// GET /api/products - público
+custom.get('/', ['PUBLIC'], async (req, res) => {
+    try {
+        const result = await ProductService.getAllProducts(req.query);
+        res.sendSuccess({ payload: result });
+    } catch (error) {
+        console.error('Get products error:', error);
+        res.sendServerError('Error fetching products');
+    }
 });
 
-router.get('/:pid', async (req, res) => {
-
+// GET /api/products/:pid - público
+custom.get('/:pid', ['PUBLIC'], async (req, res) => {
     try {
         const result = await ProductService.getProductByID(req.params.pid);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.sendSuccess({ payload: result });
     } catch (error) {
-        res.status(400).send({
-            status: 'error',
-            message: error.message
-        });
+        console.error('Get product error:', error);
+        res.sendUserError(error.message, 400);
     }
 });
 
-router.post('/', uploader.array('thumbnails', 3), async (req, res) => {
-
-    if (req.files) {
-        req.body.thumbnails = [];
-        req.files.forEach((file) => {
-            req.body.thumbnails.push(file.path);
-        });
-    }
-
+// POST /api/products - admin
+custom.post('/', ['admin'], uploader.array('thumbnails', 3), async (req, res) => {
     try {
+        if (req.files) {
+            req.body.thumbnails = [];
+            req.files.forEach((file) => {
+                req.body.thumbnails.push(file.path);
+            });
+        }
+
         const result = await ProductService.createProduct(req.body);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.sendCreated({ payload: result });
     } catch (error) {
-        res.status(400).send({
-            status: 'error',
-            message: error.message
-        });
+        console.error('Create product error:', error);
+        res.sendUserError(error.message || 'Error creating product', 400);
     }
 });
 
-router.put('/:pid', uploader.array('thumbnails', 3), async (req, res) => {
-
-    if (req.files) {
-        req.body.thumbnails = [];
-        req.files.forEach((file) => {
-            req.body.thumbnails.push(file.filename);
-        });
-    }
-
+// PUT /api/products/:pid - admin
+custom.put('/:pid', ['admin'], uploader.array('thumbnails', 3), async (req, res) => {
     try {
+        if (req.files) {
+            req.body.thumbnails = [];
+            req.files.forEach((file) => {
+                req.body.thumbnails.push(file.filename || file.path);
+            });
+        }
+
         const result = await ProductService.updateProduct(req.params.pid, req.body);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.sendSuccess({ payload: result });
     } catch (error) {
-        res.status(400).send({
-            status: 'error',
-            message: error.message
-        });
+        console.error('Update product error:', error);
+        res.sendUserError(error.message || 'Error updating product', 400);
     }
 });
 
-router.delete('/:pid', async (req, res) => {
-
+// DELETE /api/products/:pid - admin
+custom.delete('/:pid', ['admin'], async (req, res) => {
     try {
         const result = await ProductService.deleteProduct(req.params.pid);
-        res.send({
-            status: 'success',
-            payload: result
-        });
+        res.sendSuccess({ payload: result });
     } catch (error) {
-        res.status(400).send({
-            status: 'error',
-            message: error.message
-        });
+        console.error('Delete product error:', error);
+        res.sendUserError(error.message || 'Error deleting product', 400);
     }
 });
 
-export default router;
+export default custom.getRouter();

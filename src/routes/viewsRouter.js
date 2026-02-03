@@ -1,20 +1,14 @@
-import { Router } from 'express';
+import CustomRouter from '../utils/customRouter.js';
 import { productDBManager } from '../dao/productDBManager.js';
 import { cartDBManager } from '../dao/cartDBManager.js';
-import { protectedRoute, notAuthenticated, authMiddleware } from '../middleware/auth.js';
-import jwt from 'jsonwebtoken';
+import { protectedRoute, notAuthenticated } from '../middleware/auth.js';
 
-const router = Router();
+const custom = new CustomRouter();
 const ProductService = new productDBManager();
 const CartService = new cartDBManager(ProductService);
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
-
-// Aplicar middleware de autenticación a todas las rutas
-router.use(authMiddleware);
-
 // GET /login - Mostrar formulario de login (solo usuarios no autenticados)
-router.get('/login', notAuthenticated, (req, res) => {
+custom.get('/login', notAuthenticated, (req, res) => {
     const error = req.query.error || null;
     res.render('login', {
         title: 'Login',
@@ -24,7 +18,7 @@ router.get('/login', notAuthenticated, (req, res) => {
 });
 
 // GET /current - Mostrar datos del usuario actual (protegido)
-router.get('/current', protectedRoute, (req, res) => {
+custom.get('/current', protectedRoute, (req, res) => {
     res.render('current', {
         title: 'Current User',
         style: 'index.css',
@@ -33,7 +27,7 @@ router.get('/current', protectedRoute, (req, res) => {
 });
 
 // Ruta raíz - redirige según autenticación
-router.get('/', (req, res) => {
+custom.get('/', (req, res) => {
     if (req.user) {
         res.redirect('/products');
     } else {
@@ -41,12 +35,12 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/products', async (req, res) => {
-    const products = await ProductService.getAllProducts(req.query);
+// Lista pública de productos
+custom.get('/products', async (req, res) => {
+    try {
+        const products = await ProductService.getAllProducts(req.query);
 
-    res.render(
-        'index',
-        {
+        res.render('index', {
             title: 'Productos',
             style: 'index.css',
             products: JSON.parse(JSON.stringify(products.docs)),
@@ -59,43 +53,33 @@ router.get('/products', async (req, res) => {
                 exist: products.nextLink ? true : false,
                 link: products.nextLink
             }
-        }
-    )
-});
-
-router.get('/realtimeproducts', async (req, res) => {
-    const products = await ProductService.getAllProducts(req.query);
-    res.render(
-        'realTimeProducts',
-        {
-            title: 'Productos',
-            style: 'index.css',
-            products: JSON.parse(JSON.stringify(products.docs))
-        }
-    )
-});
-
-router.get('/cart/:cid', async (req, res) => {
-    const response = await CartService.getProductsFromCartByID(req.params.cid);
-
-    if (response.status === 'error') {
-        return res.render(
-            'notFound',
-            {
-                title: 'Not Found',
-                style: 'index.css'
-            }
-        );
+        });
+    } catch (error) {
+        console.error('Error rendering products view:', error);
+        res.status(500).render('notFound', { title: 'Not Found', style: 'index.css' });
     }
-
-    res.render(
-        'cart',
-        {
-            title: 'Carrito',
-            style: 'index.css',
-            products: JSON.parse(JSON.stringify(response.products))
-        }
-    )
 });
 
-export default router;
+// Página de productos en tiempo real
+custom.get('/realtimeproducts', async (req, res) => {
+    try {
+        const products = await ProductService.getAllProducts(req.query);
+        res.render('realTimeProducts', { title: 'Productos', style: 'index.css', products: JSON.parse(JSON.stringify(products.docs)) });
+    } catch (error) {
+        console.error('Error rendering realtime products view:', error);
+        res.status(500).render('notFound', { title: 'Not Found', style: 'index.css' });
+    }
+});
+
+// Mostrar carrito (requiere autenticación)
+custom.get('/cart/:cid', protectedRoute, async (req, res) => {
+    try {
+        const cart = await CartService.getProductsFromCartByID(req.params.cid);
+        res.render('cart', { title: 'Carrito', style: 'index.css', products: JSON.parse(JSON.stringify(cart.products)) });
+    } catch (error) {
+        console.error('Error rendering cart view:', error);
+        res.status(404).render('notFound', { title: 'Not Found', style: 'index.css' });
+    }
+});
+
+export default custom.getRouter();

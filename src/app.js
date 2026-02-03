@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import passport from './config/passport.js';
+import { authMiddleware } from './middleware/auth.js';
 
 import productRouter from './routes/productRouter.js';
 import cartRouter from './routes/cartRouter.js';
@@ -46,6 +47,9 @@ app.use(session({
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Auth Middleware
+app.use(authMiddleware);
 
 // Routers
 app.use('/api/products', productRouter);
