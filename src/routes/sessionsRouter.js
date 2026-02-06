@@ -1,12 +1,39 @@
 import jwt from 'jsonwebtoken';
 import CustomRouter from '../utils/customRouter.js';
 import UserDBManager from '../dao/userDBManager.js';
-import { handlePolicies } from '../middleware/auth.js';
+import { handlePolicies, authMiddleware } from '../middleware/auth.js';
+import passport from 'passport';
 
 const custom = new CustomRouter();
 const userManager = new UserDBManager();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
+// GET /api/sessions/current - Validar usuario logueado y obtener sus datos
+custom.get('/current', (req, res, next) => {
+    passport.authenticate('current', { session: false }, (err, user, info) => {
+        if (err) {
+            return res.status(500).json({ status: 'error', message: 'Internal server error' });
+        }
+
+        if (!user) {
+            return res.status(401).json({ status: 'error', message: 'Token inválido o no proporcionado' });
+        }
+
+        // Usuario autenticado mediante JWT
+        return res.status(200).json({
+            status: 'success',
+            message: 'Usuario validado correctamente',
+            user: {
+                id: user._id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    })(req, res, next);
+});
 
 // POST /api/users/register - Registrar nuevo usuario
 custom.post('/register', async (req, res) => {

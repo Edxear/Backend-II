@@ -1,8 +1,40 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GitHubStrategy } from 'passport-github2';
+import JwtStrategy from 'passport-jwt';
 import User from '../dao/models/userModel.js';
 import bcrypt from 'bcrypt';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
+const opts = {
+    jwtFromRequest: (req) => {
+        if (req && req.signedCookies && req.signedCookies.currentUser) {
+            return req.signedCookies.currentUser;
+        }
+        if (req && req.cookies && req.cookies.currentUser) {
+            return req.cookies.currentUser;
+        }
+        return null;
+    },
+    secretOrKey: JWT_SECRET
+};
+
+
+passport.use('current', new JwtStrategy.Strategy(opts, async (jwt_payload, done) => {
+    try {
+        const user = {
+            _id: jwt_payload.id,
+            first_name: jwt_payload.first_name,
+            last_name: jwt_payload.last_name,
+            email: jwt_payload.email,
+            role: jwt_payload.role
+        };
+        return done(null, user);
+    } catch (error) {
+        return done(error);
+    }
+}));
 
 // Configuración de Passport para autenticación local
 passport.use('register', new LocalStrategy({
@@ -11,9 +43,9 @@ passport.use('register', new LocalStrategy({
     passReqToCallback: true
 }, async (req, email, password, done) => {
     try {
-        const { first_name, last_name, age } = req.body;
-
-        // Verificación si el usuario ya existe
+        const { first_name, last_name, age } = req.body; 
+        
+        // Verificar si el usuario ya existe
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return done(null, false, { message: 'El email ya está registrado' });

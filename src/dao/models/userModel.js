@@ -19,6 +19,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    age: {
+        type: Number
+    },
     role: {
         type: String,
         default: 'user'
