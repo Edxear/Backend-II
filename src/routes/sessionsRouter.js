@@ -201,7 +201,7 @@ custom.put('/:id', async (req, res) => {
     }
 });
 
-// DELETE /api/users/:id - Eliminar usuario (admin only)
+// DELETE /api/users/:id - Eliminar usuario
 custom.delete('/:id', ['admin'], async (req, res) => {
     try {
         const deletedUser = await userManager.delete(req.params.id);
