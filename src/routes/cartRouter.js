@@ -21,33 +21,13 @@ custom.delete('/:cid/product/:pid', authPolicies, cartController.removeProduct);
 custom.post('/:cid/purchase', authPolicies, cartController.purchase);
 
 // Reemplazar todos los productos del carrito
-custom.put('/:cid', authPolicies, async (req, res) => {
-    try {
-        const result = await CartService.updateAllProducts(req.params.cid, req.body.products);
-        res.sendSuccess({ payload: result });
-    } catch (error) {
-        console.error('Update all products error:', error);
-        res.sendUserError(error.message, 400);
-    }
-});
+custom.put('/:cid', authPolicies, cartController.updateAllProducts);
 
 // Actualizar cantidad de producto
-custom.put('/:cid/product/:pid', authPolicies, async (req, res) => {
-    try {
-        const result = await CartService.updateProductByID(req.params.cid, req.params.pid, req.body.quantity);
-        res.sendSuccess({ payload: result });
-    } catch (error) {
-        console.error('Update product quantity error:', error);
-        res.sendUserError(error.message, 400);
-    }
-});
+custom.put('/:cid/product/:pid', authPolicies, cartController.updateProduct);
 
 // Vaciar carrito
-custom.delete('/:cid', authPolicies, async (req, res) => {
-    try {
-        const result = await CartService.deleteAllProducts(req.params.cid);
-        res.sendSuccess({ payload: result });
-    } catch (error) {
+custom.delete('/:cid', authPolicies, cartController.clearCart);
         console.error('Delete all products error:', error);
         res.sendUserError(error.message, 400);
     }

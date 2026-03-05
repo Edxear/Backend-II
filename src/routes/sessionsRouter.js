@@ -250,4 +250,165 @@ custom.post('/logout', (req, res) => {
     res.sendSuccess({ message: 'Logged out successfully' });
 });
 
+// GET /reset-password/:token - Mostrar formulario de reset (para vistas)
+custom.get('/reset-password/:token', (req, res) => {
+    try {
+        const { token } = req.params;
+        
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Reset Password</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                        margin: 0;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    }
+                    .container {
+                        background: white;
+                        padding: 40px;
+                        border-radius: 10px;
+                        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                        width: 100%;
+                        max-width: 400px;
+                    }
+                    h1 {
+                        text-align: center;
+                        color: #333;
+                        margin-bottom: 30px;
+                    }
+                    .form-group {
+                        margin-bottom: 20px;
+                    }
+                    label {
+                        display: block;
+                        margin-bottom: 8px;
+                        color: #555;
+                        font-weight: bold;
+                    }
+                    input {
+                        width: 100%;
+                        padding: 12px;
+                        border: 1px solid #ddd;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        box-sizing: border-box;
+                    }
+                    input:focus {
+                        outline: none;
+                        border-color: #667eea;
+                        box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+                    }
+                    button {
+                        width: 100%;
+                        padding: 12px;
+                        background: #667eea;
+                        color: white;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        cursor: pointer;
+                        transition: background 0.3s;
+                    }
+                    button:hover {
+                        background: #764ba2;
+                    }
+                    .message {
+                        margin-top: 20px;
+                        padding: 10px;
+                        border-radius: 5px;
+                        text-align: center;
+                        display: none;
+                    }
+                    .message.success {
+                        background: #d4edda;
+                        color: #155724;
+                        display: block;
+                    }
+                    .message.error {
+                        background: #f8d7da;
+                        color: #721c24;
+                        display: block;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Reset Your Password</h1>
+                    <form id="resetForm">
+                        <div class="form-group">
+                            <label for="password">New Password:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <button type="submit">Reset Password</button>
+                        <div id="message" class="message"></div>
+                    </form>
+                </div>
+
+                <script>
+                    document.getElementById('resetForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        
+                        const password = document.getElementById('password').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        const messageEl = document.getElementById('message');
+
+                        if (password !== confirmPassword) {
+                            messageEl.className = 'message error';
+                            messageEl.textContent = 'Passwords do not match';
+                            return;
+                        }
+
+                        try {
+                            const response = await fetch('/api/sessions/reset-password', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    token: '${token}',
+                                    newPassword: password
+                                })
+                            });
+
+                            const data = await response.json();
+
+                            if (response.ok) {
+                                messageEl.className = 'message success';
+                                messageEl.textContent = 'Password reset successfully! Redirecting to login...';
+                                setTimeout(() => {
+                                    window.location.href = '/login';
+                                }, 2000);
+                            } else {
+                                messageEl.className = 'message error';
+                                messageEl.textContent = data.error || 'Error resetting password';
+                            }
+                        } catch (error) {
+                            messageEl.className = 'message error';
+                            messageEl.textContent = 'An error occurred. Please try again.';
+                        }
+                    });
+                </script>
+            </body>
+            </html>
+        `);
+    } catch (error) {
+        console.error('Reset password form error:', error);
+        res.status(500).send('Error loading reset password form');
+    }
+});
+
 export default custom.getRouter();
