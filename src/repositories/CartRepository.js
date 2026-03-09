@@ -1,6 +1,7 @@
 import { cartDBManager } from '../dao/cartDBManager.js';
 import ProductRepository from './ProductRepository.js';
 import TicketRepository from './TicketRepository.js';
+import emailService from '../services/emailService.js';
 
 class CartRepository {
     constructor() {
@@ -71,6 +72,21 @@ class CartRepository {
                 purchaser: user.email,
                 products: purchasedProducts
             });
+
+            // Enviar correo de confirmación
+            try {
+                const ticketWithProducts = await this.ticketRepo.findById(ticket._id);
+                if (failedProducts.length > 0) {
+                    // Compra parcial
+                    await emailService.sendPartialPurchaseNotification(user, ticketWithProducts, failedProducts);
+                } else {
+                    // Compra completa
+                    await emailService.sendPurchaseConfirmation(user, ticketWithProducts);
+                }
+            } catch (emailError) {
+                console.warn('⚠️ Error enviando email de compra:', emailError.message);
+                // No fallar la compra si falla el email
+            }
 
             // Clear purchased products from cart
             const remainingProducts = cart.products.filter(item => 

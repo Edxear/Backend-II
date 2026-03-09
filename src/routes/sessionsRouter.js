@@ -91,6 +91,14 @@ custom.post('/register', async (req, res) => {
             role: 'user'
         });
 
+        // Enviar correo de bienvenida
+        try {
+            await emailService.sendWelcomeEmail(newUser);
+        } catch (emailError) {
+            console.warn('⚠️ Error enviando email de bienvenida:', emailError.message);
+            // No fallar el registro si falla el email
+        }
+
         res.sendCreated({
             message: 'User registered successfully',
             user: {
