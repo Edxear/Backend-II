@@ -1,7 +1,7 @@
-<div class="w-full max-w-7xl mx-auto px-4 pt-6 pb-12">
+<div class="w-full max-w-7xl mx-auto px-4 pt-6 pb-14">
 
-    <!-- Navbar -->
-    <nav class="flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-500 rounded-2xl shadow-lg text-white mb-8 flex-wrap">
+    <!-- NAVBAR -->
+    <nav class="flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-500 rounded-2xl shadow-lg text-white mb-6 flex-wrap">
         <h1 class="font-display text-2xl font-bold tracking-tight">Tienda Nova</h1>
         <div class="flex items-center gap-3 flex-wrap">
             {{#if isLoggedIn}}
@@ -22,7 +22,7 @@
                 </a>
                 <form id="logoutForm" style="display:inline;">
                     <button type="submit"
-                            class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                            class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer">
                         Salir
                     </button>
                 </form>
@@ -39,80 +39,261 @@
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="text-center mb-8">
-        <p class="text-xs font-extrabold uppercase tracking-widest text-indigo-500 mb-1">Colección destacada</p>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-indigo-900 mb-2">Catálogo de Productos</h2>
-        <p class="text-slate-500 max-w-xl mx-auto">Descubrí tecnología, hogar y estilo con envíos rápidos y precios actualizados.</p>
+    <!-- HERO BANNER -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-violet-700 to-blue-600 rounded-3xl mb-6 px-8 py-10 md:px-14 md:py-14 shadow-2xl shadow-indigo-200">
+        <div class="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
+        <div class="absolute bottom-0 right-32 w-48 h-48 bg-yellow-300/20 rounded-full translate-y-1/2 pointer-events-none"></div>
+        <div class="absolute top-1/2 left-1/2 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+
+        <div class="relative flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="text-white max-w-lg">
+                <div class="inline-flex items-center gap-2 bg-yellow-300 text-indigo-900 font-extrabold text-sm px-5 py-2 rounded-full mb-5 shadow-lg">
+                    🚚 ENVÍO GRATIS
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-black leading-tight mb-3">
+                    EN TU <span class="text-yellow-300">PRIMERA COMPRA</span>*
+                </h2>
+                <p class="text-white/70 text-sm mb-7">*Válido para compras seleccionadas. Consultá Términos y Condiciones.</p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/register"
+                       class="inline-block bg-yellow-300 hover:bg-yellow-200 text-indigo-900 font-extrabold px-8 py-3 rounded-xl transition-colors shadow-lg text-sm">
+                        Aprovechá ahora →
+                    </a>
+                    <a href="/products"
+                       class="inline-block bg-white/15 hover:bg-white/25 border border-white/30 text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors">
+                        Ver catálogo
+                    </a>
+                </div>
+            </div>
+            <div class="text-[7rem] md:text-[9rem] leading-none select-none drop-shadow-2xl">📦</div>
+        </div>
+
+        <!-- Dots decorativos -->
+        <div class="flex justify-center gap-2 mt-8">
+            <span class="w-2.5 h-2.5 rounded-full bg-white shadow"></span>
+            <span class="w-2 h-2 rounded-full bg-white/40 mt-0.5"></span>
+            <span class="w-2 h-2 rounded-full bg-white/40 mt-0.5"></span>
+            <span class="w-2 h-2 rounded-full bg-white/40 mt-0.5"></span>
+            <span class="w-2 h-2 rounded-full bg-white/40 mt-0.5"></span>
+        </div>
     </section>
 
-    {{#if products.length}}
-        <!-- Product grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {{#each products}}
-                <article class="bg-white rounded-2xl border border-indigo-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
-                    <!-- Accent stripe -->
-                    <div class="h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 w-full shrink-0"></div>
-                    <!-- Image -->
-                    <img src="{{this.imageUrl}}"
-                         alt="{{this.title}}"
-                         loading="lazy"
-                         class="w-full aspect-video object-cover border-b border-indigo-50">
-                    <!-- Content -->
-                    <div class="p-4 flex flex-col flex-1">
-                        <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">{{this.category}}</span>
-                        <h3 class="font-display text-base font-bold text-indigo-950 leading-snug mb-2">{{this.title}}</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 flex-1 mb-3">{{this.description}}</p>
-                        <div class="flex items-end justify-between mb-4">
-                            <div>
-                                <p class="text-xs text-slate-400 font-semibold mb-0.5">Precio</p>
-                                <p class="text-xl font-extrabold text-indigo-700">ARS {{this.formattedPrice}}</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-xs text-slate-400 font-semibold mb-0.5">Stock</p>
-                                <p class="text-sm font-bold text-emerald-600">{{this.stock}} u.</p>
-                            </div>
-                        </div>
-                        {{#if ../isLoggedIn}}
-                            <button onclick="addToCart('{{this._id}}')"
-                                    class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-2.5 rounded-xl text-sm transition-all duration-150 cursor-pointer">
-                                Agregar al Carrito
-                            </button>
+    <!-- FEATURES STRIP -->
+    <div class="flex gap-4 overflow-x-auto pb-2 mb-10 scrollbar-hide">
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">📦</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Envío gratis</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Beneficio por ser tu primera compra.</p>
+            <span class="text-indigo-500 text-xs font-bold group-hover:underline">Mostrar productos</span>
+        </div>
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">👤</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Ingresá a tu cuenta</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Disfrutá de ofertas y comprá sin límites.</p>
+            <a href="/login" class="text-indigo-500 text-xs font-bold group-hover:underline">Ingresar a tu cuenta</a>
+        </div>
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">📍</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Ingresá tu ubicación</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Consultá costos y tiempos de entrega.</p>
+            <span class="text-indigo-500 text-xs font-bold group-hover:underline">Ingresar ubicación</span>
+        </div>
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">💳</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Medios de pago</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Pagá tus compras de forma rápida y segura.</p>
+            <span class="text-indigo-500 text-xs font-bold group-hover:underline">Conocer medios de pago</span>
+        </div>
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">💲</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Menos de $10.000</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Descubrí productos con precios bajos.</p>
+            <span class="text-indigo-500 text-xs font-bold group-hover:underline">Mostrar productos</span>
+        </div>
+
+        <div class="flex-none w-44 bg-white rounded-2xl border border-slate-100 shadow-sm p-5 text-center hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group">
+            <div class="text-4xl mb-3">🏆</div>
+            <h4 class="font-bold text-slate-800 text-sm mb-1">Más vendidos</h4>
+            <p class="text-slate-400 text-xs leading-relaxed mb-3">Explorá los productos que son tendencia.</p>
+            <span class="text-indigo-500 text-xs font-bold group-hover:underline">Ir a Más vendidos</span>
+        </div>
+
+    </div>
+
+    <!-- OFERTAS DEL DIA -->
+    {{#if deals.length}}
+    <section class="mb-12">
+        <div class="flex items-center justify-between mb-5 flex-wrap gap-2">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🔥</span>
+                <h3 class="font-display text-xl font-bold text-slate-800">Ofertas del día</h3>
+                <span class="bg-red-100 text-red-600 text-xs font-extrabold px-3 py-1 rounded-full border border-red-200">
+                    Hasta agotar stock
+                </span>
+            </div>
+            <a href="/products" class="text-indigo-600 text-sm font-bold hover:underline">Ver todas las ofertas →</a>
+        </div>
+
+        <div class="flex gap-4 overflow-x-auto pb-3 scrollbar-hide">
+            {{#each deals}}
+            <article class="flex-none w-52 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-200 hover:-translate-y-1 overflow-hidden flex flex-col">
+                <div class="relative">
+                    <img src="{{this.imageUrl}}" alt="{{this.title}}" loading="lazy"
+                         class="w-full aspect-square object-cover">
+                    <span class="absolute top-2 left-2 bg-red-500 text-white text-xs font-extrabold px-2.5 py-1 rounded-full shadow-md">
+                        {{this.discountPct}}% OFF
+                    </span>
+                    {{#if this.freeShipping}}
+                    <span class="absolute bottom-2 left-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                        Envío gratis
+                    </span>
+                    {{/if}}
+                </div>
+                <div class="p-3 flex flex-col flex-1">
+                    <p class="text-xs text-slate-400 line-through mb-0.5">ARS {{this.originalFormattedPrice}}</p>
+                    <p class="text-lg font-extrabold text-slate-900 leading-tight">ARS {{this.formattedPrice}}</p>
+                    <p class="text-emerald-600 text-xs font-bold mb-2">{{this.discountPct}}% de descuento</p>
+                    <p class="text-xs text-slate-500 line-clamp-2 leading-snug flex-1 mb-3">{{this.title}}</p>
+                    {{#if ../isLoggedIn}}
+                    <button onclick="addToCart('{{this._id}}')"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-2 rounded-xl text-xs transition-all cursor-pointer">
+                        Agregar al carrito
+                    </button>
+                    {{else}}
+                    <button onclick="requireLogin()"
+                            class="w-full bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold py-2 rounded-xl text-xs transition-colors cursor-pointer">
+                        Ver oferta
+                    </button>
+                    {{/if}}
+                </div>
+            </article>
+            {{/each}}
+        </div>
+    </section>
+    {{/if}}
+
+    <!-- MAS VENDIDOS POR CATEGORIA -->
+    {{#if categoryGroups.length}}
+    <section class="mb-12">
+        <div class="flex items-center gap-3 mb-7">
+            <span class="text-2xl">🏆</span>
+            <h3 class="font-display text-xl font-bold text-slate-800">Más vendidos</h3>
+        </div>
+
+        {{#each categoryGroups}}
+        <div class="mb-8">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="text-xl">{{this.icon}}</span>
+                <h4 class="font-bold text-slate-700 text-base">{{this.name}}</h4>
+                <div class="flex-1 h-px bg-slate-100 ml-2"></div>
+                <a href="/products?category={{this.name}}"
+                   class="text-indigo-500 text-xs font-bold hover:underline shrink-0">
+                    Ver más →
+                </a>
+            </div>
+            <div class="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                {{#each this.products}}
+                <article class="flex-none w-48 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 overflow-hidden flex flex-col">
+                    <img src="{{this.imageUrl}}" alt="{{this.title}}" loading="lazy"
+                         class="w-full aspect-square object-cover border-b border-slate-50">
+                    <div class="p-3 flex flex-col flex-1">
+                        <p class="text-xs font-bold text-slate-800 line-clamp-2 leading-snug mb-1.5 flex-1">{{this.title}}</p>
+                        <p class="text-base font-extrabold text-indigo-700 mb-1">ARS {{this.formattedPrice}}</p>
+                        <p class="text-xs text-slate-400 mb-2">{{this.stock}} en stock</p>
+                        {{#if ../../isLoggedIn}}
+                        <button onclick="addToCart('{{this._id}}')"
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-1.5 rounded-xl text-xs transition-all cursor-pointer">
+                            Agregar
+                        </button>
                         {{else}}
-                            <button onclick="requireLogin()"
-                                    class="w-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold py-2.5 rounded-xl text-sm transition-colors border border-slate-200 cursor-pointer">
-                                Iniciar sesión para comprar
-                            </button>
+                        <button onclick="requireLogin()"
+                                class="w-full bg-slate-100 hover:bg-slate-200 text-slate-500 text-xs font-bold py-1.5 rounded-xl border border-slate-200 cursor-pointer">
+                            Ver
+                        </button>
                         {{/if}}
                     </div>
                 </article>
+                {{/each}}
+            </div>
+        </div>
+        {{/each}}
+    </section>
+    {{/if}}
+
+    <!-- CATALOGO COMPLETO -->
+    <section>
+        <div class="flex items-center gap-3 mb-6">
+            <span class="text-2xl">🛍️</span>
+            <h3 class="font-display text-xl font-bold text-slate-800">Catálogo completo</h3>
+            <div class="flex-1 h-px bg-slate-100 ml-2"></div>
+        </div>
+
+        {{#if products.length}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {{#each products}}
+            <article class="bg-white rounded-2xl border border-indigo-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
+                <div class="h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 w-full shrink-0"></div>
+                <img src="{{this.imageUrl}}" alt="{{this.title}}" loading="lazy"
+                     class="w-full aspect-video object-cover border-b border-indigo-50">
+                <div class="p-4 flex flex-col flex-1">
+                    <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">{{this.category}}</span>
+                    <h3 class="font-display text-base font-bold text-indigo-950 leading-snug mb-2">{{this.title}}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 flex-1 mb-3">{{this.description}}</p>
+                    <div class="flex items-end justify-between mb-4">
+                        <div>
+                            <p class="text-xs text-slate-400 font-semibold mb-0.5">Precio</p>
+                            <p class="text-xl font-extrabold text-indigo-700">ARS {{this.formattedPrice}}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400 font-semibold mb-0.5">Stock</p>
+                            <p class="text-sm font-bold text-emerald-600">{{this.stock}} u.</p>
+                        </div>
+                    </div>
+                    {{#if ../isLoggedIn}}
+                    <button onclick="addToCart('{{this._id}}')"
+                            class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-2.5 rounded-xl text-sm transition-all cursor-pointer">
+                        Agregar al Carrito
+                    </button>
+                    {{else}}
+                    <button onclick="requireLogin()"
+                            class="w-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold py-2.5 rounded-xl text-sm transition-colors border border-slate-200 cursor-pointer">
+                        Iniciar sesión para comprar
+                    </button>
+                    {{/if}}
+                </div>
+            </article>
             {{/each}}
         </div>
-    {{else}}
-        <!-- Empty state -->
-        <div class="max-w-lg mx-auto mt-12 text-center bg-white/70 border border-indigo-100 rounded-2xl p-10 shadow">
+        {{else}}
+        <div class="max-w-lg mx-auto mt-8 text-center bg-white/70 border border-indigo-100 rounded-2xl p-10 shadow">
             <p class="text-5xl mb-4">🛒</p>
             <h3 class="font-display text-xl font-bold text-indigo-900 mb-2">Preparando el catálogo</h3>
             <p class="text-slate-500 mb-4">No hay productos disponibles por el momento.</p>
             <code class="block bg-slate-100 text-indigo-700 font-mono text-sm px-4 py-2 rounded-lg">npm run seed:products</code>
         </div>
-    {{/if}}
+        {{/if}}
 
-    <!-- Pagination -->
-    <div class="flex justify-center gap-3 mt-10">
-        {{#if prevLink.exist}}
+        <!-- Paginacion -->
+        <div class="flex justify-center gap-3 mt-10">
+            {{#if prevLink.exist}}
             <a href="{{prevLink.link}}"
                class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
                 ← Anterior
             </a>
-        {{/if}}
-        {{#if nextLink.exist}}
+            {{/if}}
+            {{#if nextLink.exist}}
             <a href="{{nextLink.link}}"
                class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
                 Siguiente →
             </a>
-        {{/if}}
-    </div>
+            {{/if}}
+        </div>
+    </section>
 
 </div>
 

@@ -18,6 +18,45 @@ const mapProductsForView = (docs = []) => {
     });
 };
 
+const CATEGORY_ICONS = {
+    Audio: '🎧', Wearables: '⌚', Computacion: '💻',
+    Fotografia: '📷', 'Hogar y Oficina': '🏠', Gaming: '🎮',
+    Electrohogar: '🏡', Accesorios: '🎒', Celulares: '📱',
+    Electronica: '⚡', Calzado: '👟', Ropa: '👕', General: '🛍️'
+};
+
+const SALE_DISCOUNTS = [15, 20, 25, 30, 35];
+
+const buildHomeData = (mappedProducts) => {
+    // "Ofertas del día": primeros 5 productos con descuentos de ejemplo
+    const deals = mappedProducts.slice(0, 5).map((p, i) => {
+        const pct = SALE_DISCOUNTS[i];
+        const originalPrice = Math.round((Number(p.price) || 0) * (100 / (100 - pct)));
+        return {
+            ...p,
+            discountPct: pct,
+            originalFormattedPrice: originalPrice.toLocaleString('es-AR'),
+            freeShipping: i % 3 !== 2
+        };
+    });
+
+    // "Más vendidos": agrupar por categoría, hasta 4 productos c/u
+    const catMap = {};
+    mappedProducts.forEach(p => {
+        const cat = p.category || 'General';
+        if (!catMap[cat]) catMap[cat] = [];
+        if (catMap[cat].length < 4) catMap[cat].push(p);
+    });
+
+    const categoryGroups = Object.entries(catMap).map(([name, products]) => ({
+        name,
+        icon: CATEGORY_ICONS[name] || '🛍️',
+        products
+    }));
+
+    return { deals, categoryGroups };
+};
+
 // GET /register - Mostrar formulario de registro
 custom.get('/register', notAuthenticated, (req, res) => {
     const error = req.query.error || null;
@@ -52,11 +91,14 @@ custom.get('/', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
         const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
+        const { deals, categoryGroups } = buildHomeData(mappedProducts);
 
         res.render('index', {
             title: 'E-Commerce',
             style: 'index.css',
             products: mappedProducts,
+            deals,
+            categoryGroups,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
