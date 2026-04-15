@@ -1,63 +1,253 @@
+:root {
+    --bg: #f5f7fb;
+    --surface: #ffffff;
+    --surface-soft: #f0f4ff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --primary: #4f46e5;
+    --primary-600: #4338ca;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --border: #dbe4ff;
+    --shadow: 0 10px 30px rgba(30, 64, 175, 0.12);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap');
+
 * {
-    background-color: black;
-    color: white;
+    box-sizing: border-box;
 }
 
-hr {
-    width: 100%;
-}
-
-h3 {
-    text-align: center;
-}
-
-input {
-    background: white;
-    color: black;
-}
-
-button, .button {
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-    text-decoration: none;
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 90% 10%, #dce6ff 0%, transparent 35%),
+        radial-gradient(circle at 10% 0%, #eaf5ff 0%, transparent 45%),
+        var(--bg);
 }
 
 .box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: min(1200px, 92vw);
+    margin: 28px auto;
+    padding: 0 0 24px;
 }
 
 .header {
+    margin-bottom: 24px;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: 1200px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border-bottom: 1px solid white;
+    gap: 16px;
+    padding: 16px 18px;
+    background: linear-gradient(110deg, #2f53d8 0%, #674cc5 55%, #0ea5e9 100%);
+    border-radius: 14px;
+    color: #ffffff;
+    box-shadow: var(--shadow);
 }
 
+.navbar h1 {
+    margin: 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    letter-spacing: 0.2px;
+}
+
+.nav-buttons,
+.auth-buttons,
 .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.user-greeting {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+h2 {
+    text-align: center;
+    margin: 10px 0;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+    color: #1e3a8a;
+}
+
+.hero {
+    margin: 20px 0 4px;
+    text-align: center;
+}
+
+.hero-kicker {
+    margin: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2563eb;
+    font-weight: 800;
+}
+
+.hero-subtitle {
+    max-width: 760px;
+    margin: 8px auto 0;
+    color: #4b5563;
+    line-height: 1.55;
+}
+
+.products-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px;
+    margin-top: 22px;
+}
+
+.product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.08);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.14);
+}
+
+.product-card h3 {
+    margin: 0 0 10px;
+    color: #172554;
     text-align: left;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.15rem;
 }
 
-.user-info h2 {
-    margin: 0 0 5px 0;
-    color: #ffa500;
+.product-card p {
+    margin: 8px 0;
+    color: #374151;
 }
 
-.user-info p {
-    margin: 2px 0;
-    font-size: 14px;
+hr {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
 }
 
-#button-logout {
-    background: #d51515;
+.price {
+    color: #1d4ed8;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.stock {
+    color: #15803d;
+    font-weight: 700;
+}
+
+.stock.out-of-stock {
+    color: var(--danger);
+}
+
+button,
+.button {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.12s ease, filter 0.12s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+button:hover,
+.button:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.95);
+}
+
+.button-primary {
+    background: var(--primary);
+}
+
+.button-secondary {
+    background: #10b981;
+}
+
+.button-success {
     margin-top: 10px;
+    width: 100%;
+    background: var(--success);
+}
+
+.button-danger {
+    background: var(--danger);
+}
+
+.button-paginate {
+    background: #334155;
+}
+
+.footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.no-products {
+    margin: 30px auto 10px;
+    max-width: 560px;
+    padding: 20px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed #c7d2fe;
+    border-radius: 12px;
+    background: var(--surface-soft);
+    font-size: 1.05rem;
+}
+
+.no-products h3 {
+    margin: 0 0 8px;
+    font-size: 1.35rem;
+    color: #1e3a8a;
+}
+
+.no-products p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.no-products-hint {
+    margin-top: 10px !important;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 0.9rem;
+    color: #374151;
 }
 
 .form-group {
@@ -66,102 +256,47 @@ button, .button {
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    color: #1f2937;
 }
 
 .form-group input {
     width: 100%;
-    padding: 8px;
-    border: 1px solid white;
-    border-radius: 4px;
-}
-
-#button-login, #button-register {
-    background: #1da81d;
-    width: 100%;
     padding: 10px;
-    margin-top: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #111827;
 }
 
-.products-box {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.product-card {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid white;
-}
-
-.products-form form {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
-
-.products-form input {
-    margin-bottom: 5px;
-}
-
-.footer {
-    margin-top: 10px;
-}
-
-.view-cart {
-    display: none;
-    position: absolute;
-    right: 10px;
-    top: 15px;
-}
-
-.view-products {
-    display: block;
-    position: absolute;
-    left: 10px;
-    top: 15px;
-}
-
-#button-create, #button-products {
-    background: #1da81d;
-}
-
-#button-delete {
-    background: #d51515;
-}
-
-#button-paginate {
-    background: #646464;
-}
-
-#button-cart {
-    background: #ffa500;
+.form-group input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
 .divider {
     margin: 20px 0;
     text-align: center;
     position: relative;
+    color: #4b5563;
 }
 
 .divider span {
-    background: black;
+    background: var(--surface);
     padding: 0 10px;
     position: relative;
     z-index: 1;
 }
 
 .divider::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;
     right: 0;
     height: 1px;
-    background: white;
+    background: #cbd5e1;
 }
 
 .github-button {
@@ -170,14 +305,36 @@ button, .button {
 }
 
 .github-btn {
-    background: #24292e;
-    color: white;
+    background: #111827;
+    color: #ffffff;
     width: 100%;
     padding: 10px;
-    border: 1px solid white;
-    margin-top: 10px;
+    border-radius: 8px;
 }
 
 .github-btn:hover {
-    background: #1b1f23;
+    background: #0f172a;
+}
+
+@media (max-width: 760px) {
+    .box {
+        width: min(1200px, 94vw);
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-buttons,
+    .auth-buttons,
+    .user-info {
+        width: 100%;
+    }
+
+    .auth-buttons .button,
+    .user-info .button {
+        flex: 1;
+        min-width: 150px;
+    }
 }

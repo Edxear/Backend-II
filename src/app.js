@@ -68,10 +68,10 @@ app.use('/api/users', sessionsRouter);
 app.use('/api/services', servicesRouter);
 app.use('/', viewsRouter);
 
-// 404 Handler (antes del error handler)
+// 404 Handler
 app.use(notFoundHandler);
 
-// Error Handler (deve ser el último middleware)
+// Error Handler
 app.use(errorHandler);
 
 export default app;
