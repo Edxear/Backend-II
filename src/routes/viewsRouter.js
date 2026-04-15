@@ -7,6 +7,17 @@ const custom = new CustomRouter();
 const productService = new ProductRepository();
 const cartService = new CartRepository();
 
+const mapProductsForView = (docs = []) => {
+    return docs.map((product) => {
+        const hasThumbnails = Array.isArray(product.thumbnails) && product.thumbnails.length > 0;
+        return {
+            ...product,
+            formattedPrice: Number(product.price || 0).toLocaleString('es-AR'),
+            imageUrl: hasThumbnails ? product.thumbnails[0] : '/img/product-placeholder.svg'
+        };
+    });
+};
+
 // GET /register - Mostrar formulario de registro
 custom.get('/register', notAuthenticated, (req, res) => {
     const error = req.query.error || null;
@@ -36,15 +47,16 @@ custom.get('/current', protectedRoute, (req, res) => {
     });
 });
 
-// Ruta raíz - Mostrar productos públicamente (ESTILO MERCADO LIBRE)
+// Ruta raíz - Mostrar productos públicamente
 custom.get('/', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
+        const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
 
         res.render('index', {
             title: 'E-Commerce',
             style: 'index.css',
-            products: JSON.parse(JSON.stringify(products.docs)),
+            products: mappedProducts,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
@@ -66,11 +78,12 @@ custom.get('/', async (req, res) => {
 custom.get('/products', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
+        const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
 
         res.render('index', {
             title: 'Productos',
             style: 'index.css',
-            products: JSON.parse(JSON.stringify(products.docs)),
+            products: mappedProducts,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {

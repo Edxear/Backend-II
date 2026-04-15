@@ -32,11 +32,12 @@
         <div class="products-box">
             {{#each products}}
                 <div class="product-card">
+                    <img class="product-image" src="{{this.imageUrl}}" alt="Imagen de {{this.title}}" loading="lazy">
                     <h3>{{this.title}}</h3>
                     <hr>
                     <p><strong>Categoría:</strong> {{this.category}}</p>
                     <p><strong>Descripción:</strong> {{this.description}}</p>
-                    <p><strong>Precio:</strong> <span class="price">${{this.price}}</span></p>
+                    <p><strong>Precio:</strong> <span class="price">ARS {{this.formattedPrice}}</span></p>
                     <p><strong>Stock:</strong> <span class="stock">{{this.stock}} unidades</span></p>
                     
                     {{#if ../isLoggedIn}}
