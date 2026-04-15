@@ -1,99 +1,134 @@
-<div class="box">
-    <div class="header">
-        <div class="navbar">
-            <h1>Tienda Nova</h1>
-            <div class="nav-buttons">
-                {{#if isLoggedIn}}
-                    <div class="user-info">
-                        <span class="user-greeting">{{user.first_name}} {{user.last_name}}</span>
-                        <a id="button-cart" href="#" class="button button-primary hidden-cart">Ver Carrito</a>
-                        <a href="/current" class="button button-secondary">Perfil</a>
-                        <form id="logoutForm" style="display: inline;">
-                            <button type="submit" class="button button-danger">Salir</button>
-                        </form>
-                    </div>
-                {{else}}
-                    <div class="auth-buttons">
-                        <a href="/login" class="button button-primary">Iniciar Sesión</a>
-                        <a href="/register" class="button button-secondary">Registrarse</a>
-                    </div>
-                {{/if}}
-            </div>
-        </div>
-    </div>
+<div class="w-full max-w-7xl mx-auto px-4 pt-6 pb-12">
 
-    <section class="hero">
-        <p class="hero-kicker">Coleccion destacada</p>
-        <h2>Catalogo de Productos</h2>
-        <p class="hero-subtitle">Descubri tecnologia, hogar y estilo con envios rapidos y precios actualizados.</p>
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between gap-4 px-6 py-4 bg-gradient-to-r from-indigo-600 via-violet-600 to-sky-500 rounded-2xl shadow-lg text-white mb-8 flex-wrap">
+        <h1 class="font-display text-2xl font-bold tracking-tight">Tienda Nova</h1>
+        <div class="flex items-center gap-3 flex-wrap">
+            {{#if isLoggedIn}}
+                <span class="bg-white/20 border border-white/30 px-3 py-1.5 rounded-xl text-sm font-bold">
+                    {{user.first_name}} {{user.last_name}}
+                </span>
+                <a id="button-cart" href="#"
+                   class="hidden relative items-center gap-2 bg-white text-indigo-700 hover:bg-indigo-50 px-4 py-2 rounded-xl font-bold text-sm transition-colors">
+                    🛒 Ver Carrito
+                    <span id="cart-badge"
+                          class="hidden absolute -top-2 -right-2 h-5 w-5 bg-red-500 text-white text-xs font-bold rounded-full items-center justify-center">
+                        0
+                    </span>
+                </a>
+                <a href="/current"
+                   class="bg-white/15 hover:bg-white/25 border border-white/30 px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                    Perfil
+                </a>
+                <form id="logoutForm" style="display:inline;">
+                    <button type="submit"
+                            class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-xl text-sm font-bold transition-colors">
+                        Salir
+                    </button>
+                </form>
+            {{else}}
+                <a href="/login"
+                   class="bg-white text-indigo-700 hover:bg-indigo-50 px-5 py-2 rounded-xl font-bold text-sm transition-colors">
+                    Iniciar Sesión
+                </a>
+                <a href="/register"
+                   class="bg-white/20 hover:bg-white/30 border border-white/30 px-5 py-2 rounded-xl font-bold text-sm transition-colors">
+                    Registrarse
+                </a>
+            {{/if}}
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="text-center mb-8">
+        <p class="text-xs font-extrabold uppercase tracking-widest text-indigo-500 mb-1">Colección destacada</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-indigo-900 mb-2">Catálogo de Productos</h2>
+        <p class="text-slate-500 max-w-xl mx-auto">Descubrí tecnología, hogar y estilo con envíos rápidos y precios actualizados.</p>
     </section>
 
     {{#if products.length}}
-        <div class="products-box">
+        <!-- Product grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {{#each products}}
-                <div class="product-card">
-                    <img class="product-image" src="{{this.imageUrl}}" alt="Imagen de {{this.title}}" loading="lazy">
-                    <h3>{{this.title}}</h3>
-                    <hr>
-                    <p><strong>Categoría:</strong> {{this.category}}</p>
-                    <p><strong>Descripción:</strong> {{this.description}}</p>
-                    <p><strong>Precio:</strong> <span class="price">ARS {{this.formattedPrice}}</span></p>
-                    <p><strong>Stock:</strong> <span class="stock">{{this.stock}} unidades</span></p>
-                    
-                    {{#if ../isLoggedIn}}
-                        <button class="button button-success" onclick="addToCart('{{this._id}}')">
-                            Agregar al Carrito
-                        </button>
-                    {{else}}
-                        <button class="button button-secondary" onclick="requireLogin()">
-                            Agregar al Carrito (requiere login)
-                        </button>
-                    {{/if}}
-                </div>
+                <article class="bg-white rounded-2xl border border-indigo-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col">
+                    <!-- Accent stripe -->
+                    <div class="h-1 bg-gradient-to-r from-indigo-500 to-cyan-400 w-full shrink-0"></div>
+                    <!-- Image -->
+                    <img src="{{this.imageUrl}}"
+                         alt="{{this.title}}"
+                         loading="lazy"
+                         class="w-full aspect-video object-cover border-b border-indigo-50">
+                    <!-- Content -->
+                    <div class="p-4 flex flex-col flex-1">
+                        <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-1">{{this.category}}</span>
+                        <h3 class="font-display text-base font-bold text-indigo-950 leading-snug mb-2">{{this.title}}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 flex-1 mb-3">{{this.description}}</p>
+                        <div class="flex items-end justify-between mb-4">
+                            <div>
+                                <p class="text-xs text-slate-400 font-semibold mb-0.5">Precio</p>
+                                <p class="text-xl font-extrabold text-indigo-700">ARS {{this.formattedPrice}}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-400 font-semibold mb-0.5">Stock</p>
+                                <p class="text-sm font-bold text-emerald-600">{{this.stock}} u.</p>
+                            </div>
+                        </div>
+                        {{#if ../isLoggedIn}}
+                            <button onclick="addToCart('{{this._id}}')"
+                                    class="w-full bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold py-2.5 rounded-xl text-sm transition-all duration-150 cursor-pointer">
+                                Agregar al Carrito
+                            </button>
+                        {{else}}
+                            <button onclick="requireLogin()"
+                                    class="w-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold py-2.5 rounded-xl text-sm transition-colors border border-slate-200 cursor-pointer">
+                                Iniciar sesión para comprar
+                            </button>
+                        {{/if}}
+                    </div>
+                </article>
             {{/each}}
         </div>
     {{else}}
-        <div class="no-products">
-            <h3>Estamos preparando tu catalogo</h3>
-            <p>No hay productos disponibles por el momento. Carga el seed para visualizar la tienda con contenido.</p>
-            <p class="no-products-hint">Comando: npm run seed:products</p>
+        <!-- Empty state -->
+        <div class="max-w-lg mx-auto mt-12 text-center bg-white/70 border border-indigo-100 rounded-2xl p-10 shadow">
+            <p class="text-5xl mb-4">🛒</p>
+            <h3 class="font-display text-xl font-bold text-indigo-900 mb-2">Preparando el catálogo</h3>
+            <p class="text-slate-500 mb-4">No hay productos disponibles por el momento.</p>
+            <code class="block bg-slate-100 text-indigo-700 font-mono text-sm px-4 py-2 rounded-lg">npm run seed:products</code>
         </div>
     {{/if}}
 
-    <div class="footer">
+    <!-- Pagination -->
+    <div class="flex justify-center gap-3 mt-10">
         {{#if prevLink.exist}}
-            <a class="button button-paginate" href="{{prevLink.link}}">← Anterior</a>
+            <a href="{{prevLink.link}}"
+               class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
+                ← Anterior
+            </a>
         {{/if}}
         {{#if nextLink.exist}}
-            <a class="button button-paginate" href="{{nextLink.link}}">Siguiente →</a>
+            <a href="{{nextLink.link}}"
+               class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
+                Siguiente →
+            </a>
         {{/if}}
     </div>
+
 </div>
 
 <script>
     document.getElementById('logoutForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         try {
-            const response = await fetch('/api/sessions/logout', {
-                method: 'POST'
-            });
-
-            if (response.ok) {
-                window.location.href = '/';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+            const res = await fetch('/api/sessions/logout', { method: 'POST' });
+            if (res.ok) window.location.href = '/';
+        } catch (err) { console.error(err); }
     });
 
-    function addToCart(productId) {
-        window.addToCart(productId);
-    }
-
     function requireLogin() {
-        alert('Por favor inicia sesión para agregar productos al carrito');
-        window.location.href = '/login';
+        if (confirm('Necesitás iniciar sesión para agregar productos al carrito. ¿Ir a login?')) {
+            window.location.href = '/login';
+        }
     }
 </script>
 <script src="/js/ecommerce.js"></script>
