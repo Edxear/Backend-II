@@ -6,7 +6,7 @@
                 {{#if isLoggedIn}}
                     <div class="user-info">
                         <span class="user-greeting">{{user.first_name}} {{user.last_name}}</span>
-                        <a href="/cart/1" class="button button-primary">Ver Carrito</a>
+                        <a id="button-cart" href="#" class="button button-primary hidden-cart">Ver Carrito</a>
                         <a href="/current" class="button button-secondary">Perfil</a>
                         <form id="logoutForm" style="display: inline;">
                             <button type="submit" class="button button-danger">Salir</button>
@@ -88,15 +88,7 @@
     });
 
     function addToCart(productId) {
-        if (!document.querySelector('.user-greeting')) {
-            alert('Debes iniciar sesión para agregar productos al carrito');
-            window.location.href = '/login';
-            return;
-        }
-        
-        console.log('Agregando producto:', productId);
-        // Implementar lógica de agregar al carrito
-        alert('Producto agregado al carrito');
+        window.addToCart(productId);
     }
 
     function requireLogin() {
@@ -104,3 +96,4 @@
         window.location.href = '/login';
     }
 </script>
+<script src="/js/ecommerce.js"></script>

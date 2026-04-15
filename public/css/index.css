@@ -224,6 +224,10 @@ button:hover,
     background: #334155;
 }
 
+.hidden-cart {
+    display: none;
+}
+
 .footer {
     margin-top: 20px;
     display: flex;
