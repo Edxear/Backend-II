@@ -5,38 +5,36 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from './config/passport.js';
 import { authMiddleware } from './middleware/auth.js';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import config from './config/config.js';
-import twilio from 'twilio';
+import { createLogger } from './utils/loggerUtil.js';
+import { runStartupValidation } from './config/validationConfig.js';
 
 import productRouter from './routes/productRouter.js';
 import cartRouter from './routes/cartRouter.js';
 import viewsRouter from './routes/viewsRouter.js';
 import sessionsRouter from './routes/sessionsRouter.js';
+import servicesRouter from './routes/servicesRouter.js';
 import __dirname from './utils/constantsUtil.js';
 import websocket from './websocket.js';
 import { connDB } from './config/db.js';
 
+const logger = createLogger('App');
 const app = express();
 
-const TWILIO_ACCOUNT_SID = config.TWILIO_ACCOUNT_SID
-const TWILIO_AUTH_TOKEN = config.TWILIO_AUTH_TOKEN
-const TWILIO_SMS_NUMBER = config.TWILIO_SMS_NUMBER
-
-const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
-app.get("/sms", async (req, res) => {
-    let result = await client.messages.create({
-        body: "Es un mensaje desde mi aplicacion backend",
-        from: TWILIO_SMS_NUMBER,
-        to: "+543446595326"
-    })
-
-    res.send({ status: "success", result: "Mensaje enviado" })
-})
-
-
-// Database connection
-connDB(config.MONGODB_URI, config.DB_NAME);
+// Initialize Twilio client only if credentials are configured
+let twilioClient = null;
+if (config.TWILIO_ACCOUNT_SID && config.TWILIO_AUTH_TOKEN) {
+    try {
+        const twilio = await import('twilio');
+        twilioClient = twilio.default(config.TWILIO_ACCOUNT_SID, config.TWILIO_AUTH_TOKEN);
+        logger.info('✅ Twilio configurado correctamente');
+    } catch (error) {
+        logger.warn('⚠️ Error configurando Twilio', error);
+    }
+} else {
+    logger.warn('⚠️ Credenciales de Twilio no configuradas. SMS no disponible.');
+}
 
 app.engine('handlebars', handlebars.engine());
 app.set('views', __dirname + '/../views');
@@ -67,11 +65,36 @@ app.use('/api/products', productRouter);
 app.use('/api/carts', cartRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/users', sessionsRouter);
+app.use('/api/services', servicesRouter);
 app.use('/', viewsRouter);
 
-// Server
-const httpServer = app.listen(config.PORT, () => {
-    console.log(`Start server in PORT ${config.PORT}`);
-});
+// 404 Handler (antes del error handler)
+app.use(notFoundHandler);
 
-websocket(httpServer);
+// Error Handler (deve ser el último middleware)
+app.use(errorHandler);
+
+export default app;
+
+// Async initialization
+(async () => {
+    try {
+        // Database connection
+        await connDB(config.MONGODB_URI, config.DB_NAME);
+        logger.success('Base de Datos inicializada');
+
+        // Validación de configuración al iniciar
+        await runStartupValidation(config, connDB);
+
+        // Server
+        const httpServer = app.listen(config.PORT, () => {
+            logger.info(`▶️  Servidor iniciado en puerto ${config.PORT}`);
+            logger.info(`📍 URL: http://localhost:${config.PORT}`);
+        });
+
+        websocket(httpServer);
+    } catch (error) {
+        logger.error('Error fatal en inicialización', error);
+        process.exit(1);
+    }
+})();

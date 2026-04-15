@@ -1,0 +1,187 @@
+[2026-04-15T22:43:59.436Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:43:59.439Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:44:03.392Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:44:03.394Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:44:03.505Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:44:08.419Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:44:08.420Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:44:08.747Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:44:14.334Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:44:14.336Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:44:14.455Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:44:14.469Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:44:14.472Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:44:14.478Z] [ERROR] [ConfigValidator] ❌ Errores críticos de configuración detectados:
+[2026-04-15T22:44:14.479Z] [ERROR] [ConfigValidator]   1. JWT_SECRET no está configurado o usa valor por defecto (NO SEGURO)
+[2026-04-15T22:44:14.480Z] [ERROR] [ConfigValidator] Fallos en validación de startup | {}
+[2026-04-15T22:44:47.185Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:44:47.205Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:44:47.392Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:44:47.410Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:44:47.414Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:44:47.417Z] [ERROR] [ConfigValidator] ❌ Errores críticos de configuración detectados:
+[2026-04-15T22:44:47.419Z] [ERROR] [ConfigValidator]   1. JWT_SECRET no está configurado o usa valor por defecto (NO SEGURO)
+[2026-04-15T22:44:47.426Z] [ERROR] [ConfigValidator] Fallos en validación de startup | {}
+[2026-04-15T22:45:14.888Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:45:14.891Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:45:14.898Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:45:15.117Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:45:15.123Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:45:15.125Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:45:15.128Z] [ERROR] [ConfigValidator] ❌ Errores críticos de configuración detectados:
+[2026-04-15T22:45:15.130Z] [ERROR] [ConfigValidator]   1. JWT_SECRET no está configurado o usa valor por defecto (NO SEGURO)
+[2026-04-15T22:45:15.133Z] [ERROR] [ConfigValidator] Fallos en validación de startup | {}
+[2026-04-15T22:45:24.510Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:45:24.513Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:45:24.527Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:45:24.681Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:45:24.683Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:45:24.686Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:45:24.689Z] [ERROR] [ConfigValidator] ❌ Errores críticos de configuración detectados:
+[2026-04-15T22:45:24.690Z] [ERROR] [ConfigValidator]   1. JWT_SECRET no está configurado o usa valor por defecto (NO SEGURO)
+[2026-04-15T22:45:24.691Z] [ERROR] [ConfigValidator] Fallos en validación de startup | {}
+[2026-04-15T22:45:27.207Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:45:27.209Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:45:27.215Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:45:27.383Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:45:27.385Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:45:27.390Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:45:27.397Z] [ERROR] [ConfigValidator] ❌ Errores críticos de configuración detectados:
+[2026-04-15T22:45:27.399Z] [ERROR] [ConfigValidator]   1. JWT_SECRET no está configurado o usa valor por defecto (NO SEGURO)
+[2026-04-15T22:45:27.400Z] [ERROR] [ConfigValidator] Fallos en validación de startup | {}
+[2026-04-15T22:48:38.223Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:48:38.226Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:48:38.233Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:48:38.251Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:48:38.269Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:48:38.279Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:48:38.387Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:48:38.388Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:48:38.398Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:48:38.399Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:48:38.408Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:48:38.413Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:48:38.416Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:48:38.424Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:48:38.437Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:48:38.444Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:48:38.457Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:48:38.465Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:48:38.476Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:48:38.478Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:48:38.473Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:48:38.484Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:48:38.495Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:48:38.493Z] [INFO] [App] ▶️  Servidor iniciado en puerto 8083
+[2026-04-15T22:48:38.497Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:48:38.538Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:48:38.528Z] [INFO] [App] 📍 URL: http://localhost:8083
+[2026-04-15T22:48:38.560Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:48:38.572Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:48:38.584Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:48:38.588Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:48:38.606Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:48:38.630Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:48:38.635Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:50:58.065Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:50:58.067Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:50:58.078Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:50:58.152Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:50:58.158Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:50:58.172Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:50:58.224Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:50:58.226Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:50:58.229Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:50:58.231Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:50:58.233Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:50:58.237Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:50:58.243Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:50:58.246Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:50:58.250Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:50:58.252Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:50:58.256Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:50:58.259Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:50:58.262Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:50:58.282Z] [INFO] [App] ▶️  Servidor iniciado en puerto 8083
+[2026-04-15T22:50:58.284Z] [INFO] [App] 📍 URL: http://localhost:8083
+[2026-04-15T22:50:58.323Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:50:58.325Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:50:58.329Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:50:58.333Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:50:58.338Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:50:58.343Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:50:58.350Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:50:58.353Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:50:58.356Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:50:58.358Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:50:58.362Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:50:58.364Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:50:58.368Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:51:23.309Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:51:23.311Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:51:23.317Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:51:23.492Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:51:23.514Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:51:23.533Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:51:23.548Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:51:23.549Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:51:23.552Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:51:23.554Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:51:23.557Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:51:23.560Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:51:23.565Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:51:23.568Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:51:23.571Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:51:23.574Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:51:23.575Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:51:23.576Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:51:23.578Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:51:23.591Z] [INFO] [App] ▶️  Servidor iniciado en puerto 8083
+[2026-04-15T22:51:23.594Z] [INFO] [App] 📍 URL: http://localhost:8083
+[2026-04-15T22:51:23.680Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:51:23.682Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:51:23.687Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:51:23.690Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:51:23.700Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:51:23.707Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:51:23.708Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:51:23.709Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:51:23.711Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:51:23.718Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:51:23.722Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:51:23.724Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:51:23.725Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:53:36.800Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:53:36.802Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:53:36.829Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:53:37.069Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:53:37.071Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:53:37.074Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:53:37.081Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:53:37.086Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:53:37.089Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:53:37.097Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:53:37.100Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:53:37.106Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:53:37.119Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:53:37.131Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:53:37.132Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:53:37.134Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción
+[2026-04-15T22:53:37.151Z] [INFO] [App] ▶️  Servidor iniciado en puerto 8083
+[2026-04-15T22:53:37.162Z] [INFO] [App] 📍 URL: http://localhost:8083
+[2026-04-15T22:53:39.382Z] [INFO] [ServicesRouter] ✅ Twilio disponible para envío de SMS
+[2026-04-15T22:53:39.383Z] [INFO] [ServicesRouter] ✅ Router de servicios inicializado correctamente
+[2026-04-15T22:53:39.387Z] [INFO] [App] ✅ Twilio configurado correctamente
+[2026-04-15T22:53:39.464Z] [INFO] [App] ✅ Completado: Base de Datos inicializada
+[2026-04-15T22:53:39.466Z] [INFO] [ConfigValidator] ▶️  Iniciando: Validación de Startup
+[2026-04-15T22:53:39.467Z] [WARN] [ConfigValidator] ⚠️  GitHub OAuth no configurado - login con GitHub deshabilitado
+[2026-04-15T22:53:39.468Z] [INFO] [ConfigValidator] ✅ Completado: Validación de configuración completada
+[2026-04-15T22:53:39.470Z] [INFO] [ConfigValidator] ✅ Puerto validado: 8083
+[2026-04-15T22:53:39.472Z] [INFO] [ConfigValidator] Estado de Servicios Externos:
+[2026-04-15T22:53:39.474Z] [INFO] [ConfigValidator]   • email: ✅ Configurado
+[2026-04-15T22:53:39.475Z] [INFO] [ConfigValidator]   • twilio: ✅ Configurado
+[2026-04-15T22:53:39.477Z] [INFO] [ConfigValidator]   • github: ⚠️  No configurado
+[2026-04-15T22:53:39.478Z] [INFO] [ConfigValidator] ▶️  Iniciando: Conexión a Base de Datos
+[2026-04-15T22:53:39.479Z] [INFO] [ConfigValidator] ✅ Completado: Conexión a Base de Datos
+[2026-04-15T22:53:39.480Z] [INFO] [ConfigValidator] ✅ Completado: Validación de Startup completada
+[2026-04-15T22:53:39.481Z] [INFO] [ConfigValidator] 🚀 Sistema listo para producción

@@ -1,9 +1,23 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import crypto from 'crypto';
 
 // Cargar variables de entorno
 dotenv.config();
+
+/**
+ * Genera una clave secreta segura para desarrollo
+ * En producción, DEBE estar en .env
+ */
+function generateSecretKey(type) {
+    const env = process.env.NODE_ENV || 'development';
+    if (env === 'production') {
+        throw new Error(`❌ ${type.toUpperCase()}_SECRET debe estar configurado en producción`);
+    }
+    // En desarrollo, genera una clave aleatoria
+    return crypto.randomBytes(32).toString('hex');
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,12 +31,12 @@ const config = {
     DB_NAME: process.env.DB_NAME || 'integrative_practice',
     
     // JWT
-    JWT_SECRET: process.env.JWT_SECRET || 'your_jwt_secret_key_change_this_in_production',
+    JWT_SECRET: process.env.JWT_SECRET || generateSecretKey('jwt'),
     JWT_EXPIRE: '24h',
     
     // Session
-    SESSION_SECRET: process.env.SESSION_SECRET || 's3cr3t0',
-    COOKIE_SECRET: process.env.COOKIE_SECRET || 's3cr3t0',
+    SESSION_SECRET: process.env.SESSION_SECRET || generateSecretKey('session'),
+    COOKIE_SECRET: process.env.COOKIE_SECRET || generateSecretKey('cookie'),
     
     // GitHub OAuth
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID || null,

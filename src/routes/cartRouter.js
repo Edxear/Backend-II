@@ -28,9 +28,5 @@ custom.put('/:cid/product/:pid', authPolicies, cartController.updateProduct);
 
 // Vaciar carrito
 custom.delete('/:cid', authPolicies, cartController.clearCart);
-        console.error('Delete all products error:', error);
-        res.sendUserError(error.message, 400);
-    }
-});
 
 export default custom.getRouter();

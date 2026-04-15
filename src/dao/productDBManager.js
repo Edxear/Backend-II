@@ -1,4 +1,5 @@
 import productModel from "./models/productModel.js";
+import config from "../config/config.js";
 
 class productDBManager {
 
@@ -12,8 +13,9 @@ class productDBManager {
 
         const products = await productModel.paginate({}, paginate);
 
-        products.prevLink = products.hasPrevPage?`http://localhost:8080/products?page=${products.prevPage}` : null;
-        products.nextLink = products.hasNextPage?`http://localhost:8080/products?page=${products.nextPage}` : null;
+        const baseUrl = `http://localhost:${config.PORT}`;
+        products.prevLink = products.hasPrevPage ? `${baseUrl}/products?page=${products.prevPage}` : null;
+        products.nextLink = products.hasNextPage ? `${baseUrl}/products?page=${products.nextPage}` : null;
 
         //Add limit
         if (products.prevLink && paginate.limit !== 10) products.prevLink += `&limit=${paginate.limit}`
@@ -27,34 +29,48 @@ class productDBManager {
     }
 
     async getProductByID(pid) {
-        const product = await productModel.findOne({_id: pid});
-
-        if (!product) throw new Error(`El producto ${pid} no existe!`);
-
-        return product;
+        try {
+            const product = await productModel.findOne({_id: pid});
+            if (!product) throw new Error(`El producto ${pid} no existe!`);
+            return product;
+        } catch (error) {
+            throw error;
+        }
     }
 
     async createProduct(product) {
-        const {title, description, code, price, stock, category, thumbnails} = product;
+        try {
+            const {title, description, code, price, stock, category, thumbnails} = product;
 
-        if (!title || !description || !code || !price || !stock || !category) {
-            throw new Error('Error al crear el producto');
+            if (!title || !description || !code || !price || !stock || !category) {
+                throw new Error('Todos los campos son requeridos');
+            }
+
+            return await productModel.create({title, description, code, price, stock, category, thumbnails});  
+        } catch (error) {
+            throw error;
         }
-
-        return await productModel.create({title, description, code, price, stock, category, thumbnails});  
     }
 
     async updateProduct(pid, productUpdate) {
-        return await productModel.updateOne({_id: pid}, productUpdate);
+        try {
+            const product = await productModel.findOne({_id: pid});
+            if (!product) throw new Error(`El producto ${pid} no existe!`);
+            return await productModel.updateOne({_id: pid}, productUpdate);
+        } catch (error) {
+            throw error;
+        }
     }
 
     async deleteProduct(pid) {
-        const result = await productModel.deleteOne({_id: pid});
-
-        if (result.deletedCount === 0) throw new Error(`El producto ${pid} no existe!`);
-
-        return result;
+        try {
+            const result = await productModel.deleteOne({_id: pid});
+            if (result.deletedCount === 0) throw new Error(`El producto ${pid} no existe!`);
+            return result;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
-export { productDBManager };
+export default productDBManager;

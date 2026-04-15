@@ -118,13 +118,21 @@ class CartController {
                 return res.sendUserError('Products must be an array', 400);
             }
 
-            const updatedCart = await this.cartRepo.updateProduct(cid, null, null);
-            // Note: This is a simplified implementation - you may need to adjust based on your DAO
-            const result = await this.cartRepo.dao.updateAllProducts(cid, products);
+            const updatedCart = await this.cartRepo.clear(cid);
+            
+            // Agregar los nuevos productos
+            for (const item of products) {
+                if (!item.product || !item.quantity) {
+                    return res.sendUserError('Each product must have product id and quantity', 400);
+                }
+                await this.cartRepo.addProduct(cid, item.product, item.quantity);
+            }
+            
+            const finalCart = await this.cartRepo.getById(cid);
             
             res.sendSuccess({
                 message: 'Cart updated successfully',
-                payload: result
+                payload: finalCart
             });
         } catch (error) {
             console.error('Update all products error:', error);

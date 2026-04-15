@@ -1,4 +1,4 @@
-import { cartDBManager } from '../dao/cartDBManager.js';
+import cartDBManager from '../dao/cartDBManager.js';
 import ProductRepository from './ProductRepository.js';
 import TicketRepository from './TicketRepository.js';
 import emailService from '../services/emailService.js';
@@ -28,7 +28,15 @@ class CartRepository {
         if (product.stock < quantity) {
             throw new Error('Insufficient stock');
         }
-        return await this.dao.addProductByID(cartId, productId);
+        // Add product with quantity 1, then update quantity if needed
+        await this.dao.addProductByID(cartId, productId);
+        
+        if (quantity > 1) {
+            // Update the quantity to the requested amount
+            return await this.dao.updateProductByID(cartId, productId, quantity);
+        }
+        
+        return await this.getById(cartId);
     }
 
     async removeProduct(cartId, productId) {

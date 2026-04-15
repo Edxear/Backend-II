@@ -3,29 +3,53 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - E-Commerce</title>
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <div class="login-container">
-        <h1>Login</h1>
+        <div class="login-header">
+            <h1>🛍️ Iniciar Sesión</h1>
+            <p>Accede a tu cuenta</p>
+        </div>
+
         {{#if error}}
-            <div class="error-message">{{ error }}</div>
+            <div class="error-message">
+                ⚠️ {{error}}
+            </div>
         {{/if}}
+
         <form method="POST" action="/api/users/login">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
             </div>
+            
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" placeholder="Tu contraseña" required>
             </div>
-            <button type="submit" class="btn-submit">Login</button>
+
+            <button type="submit" class="btn-submit">Iniciar Sesión</button>
         </form>
-        <p class="register-link">
-            Don't have an account? <a href="/register">Register here</a>
-        </p>
+
+        <div class="auth-footer">
+            <p>¿No tienes cuenta? 
+                <a href="/register">Regístrate aquí</a>
+            </p>
+            <p>
+                <a href="/" class="btn-back">Volver al Catálogo</a>
+            </p>
+        </div>
+
+        <div class="demo-credentials">
+            <hr>
+            <p style="font-size: 12px; color: #999; margin-top: 15px;">
+                <strong>Credenciales de demo:</strong><br>
+                Usuario: <code>demo@login.com</code><br>
+                Contraseña: <code>Demo1234!</code>
+            </p>
+        </div>
     </div>
 
     <style>
@@ -36,112 +60,163 @@
         }
 
         html, body {
-            background-color: #f5f5f5 !important;
-            color: #333 !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         .login-container {
-            max-width: 400px;
+            max-width: 420px;
             margin: 50px auto;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff !important;
-            color: #333 !important;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
         }
 
-        .login-container h1 {
+        .login-header {
             text-align: center;
-            color: #333 !important;
             margin-bottom: 30px;
-            background-color: transparent !important;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 20px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
         }
 
         .error-message {
-            background-color: #f8d7da !important;
-            color: #721c24 !important;
-            padding: 12px;
-            border-radius: 4px;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px 15px;
+            border-radius: 6px;
             margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
+            border-left: 4px solid #f5c6cb;
+            font-size: 14px;
         }
 
         .form-group {
-            margin-bottom: 15px;
-            background-color: transparent !important;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #333 !important;
-            font-weight: 500;
-            background-color: transparent !important;
-            text-decoration: none;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
             font-size: 14px;
-            box-sizing: border-box;
-            background-color: #ffffff !important;
-            color: #333 !important;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #f9f9f9;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            background-color: #ffffff !important;
-            color: #333 !important;
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+            background-color: #ffffff;
         }
 
         .form-group input::placeholder {
-            color: #999 !important;
+            color: #bbb;
         }
 
         .btn-submit {
             width: 100%;
-            padding: 12px;
-            background-color: #007bff !important;
-            color: white !important;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .btn-submit:hover {
-            background-color: #0056b3 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .register-link {
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .auth-footer {
             text-align: center;
-            margin-top: 20px;
-            color: #666 !important;
-            background-color: transparent !important;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
 
-        .register-link a {
-            color: #007bff !important;
+        .auth-footer p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .auth-footer a {
+            color: #667eea;
             text-decoration: none;
-            font-weight: 500;
-            background-color: transparent !important;
+            font-weight: 600;
+            transition: color 0.3s;
         }
 
-        .register-link a:hover {
+        .auth-footer a:hover {
+            color: #764ba2;
             text-decoration: underline;
         }
 
+        .btn-back {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #f0f0f0;
+            color: #667eea;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-back:hover {
+            background-color: #e0e0e0;
+        }
+
+        .demo-credentials {
+            font-size: 12px;
+            color: #999;
+        }
+
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #eee;
+            margin: 15px 0;
+        }
+
         form {
-            background-color: transparent !important;
+            background-color: transparent;
         }
     </style>
 </body>
