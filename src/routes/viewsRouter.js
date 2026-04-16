@@ -27,6 +27,45 @@ const CATEGORY_ICONS = {
 
 const SALE_DISCOUNTS = [15, 20, 25, 30, 35];
 
+const buildFeaturedAreas = () => {
+    const createOffer = ({ title, category, price, discountPct, imageUrl }) => {
+        const originalPrice = Math.round(price * (100 / (100 - discountPct)));
+        return {
+            title,
+            category,
+            formattedPrice: Number(price).toLocaleString('es-AR'),
+            originalFormattedPrice: originalPrice.toLocaleString('es-AR'),
+            discountPct,
+            imageUrl
+        };
+    };
+
+    return [
+        {
+            name: 'Celulares',
+            icon: '📱',
+            products: [
+                createOffer({ title: 'Smartphone Nova X12 256GB', category: 'Celulares', price: 899999, discountPct: 22, imageUrl: 'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Smartphone Vision Pro 5G 128GB', category: 'Celulares', price: 749999, discountPct: 18, imageUrl: 'https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Smartphone Urban Max 512GB', category: 'Celulares', price: 1099999, discountPct: 28, imageUrl: 'https://images.pexels.com/photos/1275229/pexels-photo-1275229.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Smartphone Lite Go 128GB', category: 'Celulares', price: 589999, discountPct: 15, imageUrl: 'https://images.pexels.com/photos/341523/pexels-photo-341523.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Smartphone Zoom Plus 256GB', category: 'Celulares', price: 839999, discountPct: 25, imageUrl: 'https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&cs=tinysrgb&w=700' })
+            ]
+        },
+        {
+            name: 'Calzado',
+            icon: '👟',
+            products: [
+                createOffer({ title: 'Zapatillas Runner One', category: 'Calzado', price: 119999, discountPct: 20, imageUrl: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Zapatillas Street Urban', category: 'Calzado', price: 98999, discountPct: 18, imageUrl: 'https://images.pexels.com/photos/19090/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Botas Trek Pro', category: 'Calzado', price: 156999, discountPct: 24, imageUrl: 'https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Zapatillas Court Classic', category: 'Calzado', price: 87999, discountPct: 16, imageUrl: 'https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=700' }),
+                createOffer({ title: 'Sneakers Air Flex', category: 'Calzado', price: 132499, discountPct: 21, imageUrl: 'https://images.pexels.com/photos/1456735/pexels-photo-1456735.jpeg?auto=compress&cs=tinysrgb&w=700' })
+            ]
+        }
+    ];
+};
+
 const buildHomeData = (mappedProducts) => {
     const shuffledProducts = [...mappedProducts].sort(() => Math.random() - 0.5);
 
@@ -66,7 +105,9 @@ const buildHomeData = (mappedProducts) => {
         products
     }));
 
-    return { deals, categoryGroups };
+    const featuredAreas = buildFeaturedAreas();
+
+    return { deals, categoryGroups, featuredAreas };
 };
 
 // GET /register - Mostrar formulario de registro
@@ -103,7 +144,7 @@ custom.get('/', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
         const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
-        const { deals, categoryGroups } = buildHomeData(mappedProducts);
+        const { deals, categoryGroups, featuredAreas } = buildHomeData(mappedProducts);
 
         res.render('index', {
             title: 'E-Commerce',
@@ -113,6 +154,7 @@ custom.get('/', async (req, res) => {
             hasDeals: deals.length > 0,
             categoryGroups,
             hasCategoryGroups: categoryGroups.length > 0,
+            featuredAreas,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
@@ -135,7 +177,7 @@ custom.get('/products', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
         const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
-        const { deals, categoryGroups } = buildHomeData(mappedProducts);
+        const { deals, categoryGroups, featuredAreas } = buildHomeData(mappedProducts);
 
         res.render('index', {
             title: 'Productos',
@@ -145,6 +187,7 @@ custom.get('/products', async (req, res) => {
             hasDeals: deals.length > 0,
             categoryGroups,
             hasCategoryGroups: categoryGroups.length > 0,
+            featuredAreas,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {

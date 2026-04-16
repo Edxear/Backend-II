@@ -9,9 +9,12 @@ class productDBManager {
             limit: params.limit ? parseInt(params.limit) : 10,
         }
 
+        const query = {};
+        if (params.category) query.category = params.category;
+
         if (params.sort && (params.sort === 'asc' || params.sort === 'desc')) paginate.sort = { price: params.sort}
 
-        const products = await productModel.paginate({}, paginate);
+        const products = await productModel.paginate(query, paginate);
 
         const baseUrl = `http://localhost:${config.PORT}`;
         products.prevLink = products.hasPrevPage ? `${baseUrl}/products?page=${products.prevPage}` : null;
@@ -24,6 +27,10 @@ class productDBManager {
         //Add sort
         if (products.prevLink && paginate.sort) products.prevLink += `&sort=${params.sort}`
         if (products.nextLink && paginate.sort) products.nextLink += `&sort=${params.sort}`
+
+        //Add category filter
+        if (products.prevLink && params.category) products.prevLink += `&category=${encodeURIComponent(params.category)}`
+        if (products.nextLink && params.category) products.nextLink += `&category=${encodeURIComponent(params.category)}`
 
         return products;
     }

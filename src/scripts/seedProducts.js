@@ -5,89 +5,164 @@ import productModel from '../dao/models/productModel.js';
 
 dotenv.config();
 
-const sampleProducts = [
+const VARIANTS = ['Pro', 'Plus', 'Max', 'Lite', 'Urban', 'Prime', 'Edge', 'Go', 'Flex', 'Elite'];
+
+const CATEGORIES = [
     {
-        title: 'Auriculares Inalambricos NovaSound X1',
-        description: 'Sonido envolvente, cancelacion de ruido y bateria de larga duracion para todo el dia.',
-        code: 'NS-X1-001',
-        price: 15999,
-        stock: 24,
-        category: 'Audio',
-        thumbnails: []
+        name: 'Autos, Motos y Otros',
+        codePrefix: 'AUTO',
+        baseName: 'Accesorio Auto',
+        basePrice: 78999,
+        images: [
+            'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Smartwatch Pulse Active 2',
-        description: 'Monitoreo de salud, GPS y pantalla AMOLED para entrenamiento diario.',
-        code: 'PA2-002',
-        price: 22490,
-        stock: 18,
-        category: 'Wearables',
-        thumbnails: []
+        name: 'Celulares y Telefonos',
+        codePrefix: 'CEL',
+        baseName: 'Smartphone',
+        basePrice: 699999,
+        images: [
+            'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Notebook Orbit 14 Ryzen 7',
-        description: 'Rendimiento alto para estudio y trabajo con 16GB RAM y SSD de 512GB.',
-        code: 'OB14-R7-003',
-        price: 739999,
-        stock: 7,
-        category: 'Computacion',
-        thumbnails: []
+        name: 'Electrodomesticos y Aires Ac.',
+        codePrefix: 'ELEC',
+        baseName: 'Electrodomestico',
+        basePrice: 189999,
+        images: [
+            'https://images.pexels.com/photos/4108712/pexels-photo-4108712.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/5824870/pexels-photo-5824870.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Camara Instantanea LumiShot Mini',
-        description: 'Captura momentos y obtiene impresiones al instante con filtros creativos.',
-        code: 'LSM-004',
-        price: 68990,
-        stock: 12,
-        category: 'Fotografia',
-        thumbnails: []
+        name: 'Herramientas',
+        codePrefix: 'TOOL',
+        baseName: 'Kit Herramientas',
+        basePrice: 64999,
+        images: [
+            'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Silla Ergonomica CoreFlex',
-        description: 'Respaldo lumbar ajustable y apoyabrazos 3D para largas jornadas.',
-        code: 'CF-ERG-005',
-        price: 198500,
-        stock: 9,
-        category: 'Hogar y Oficina',
-        thumbnails: []
+        name: 'Accesorios para Vehiculos',
+        codePrefix: 'VEH',
+        baseName: 'Accesorio Vehicular',
+        basePrice: 45999,
+        images: [
+            'https://images.pexels.com/photos/11139552/pexels-photo-11139552.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Teclado Mecanico Zenith RGB',
-        description: 'Switches tactiles, retroiluminacion RGB personalizable y estructura de aluminio.',
-        code: 'ZEN-RGB-006',
-        price: 48999,
-        stock: 15,
-        category: 'Gaming',
-        thumbnails: []
+        name: 'Ropa y Accesorios',
+        codePrefix: 'ROPA',
+        baseName: 'Prenda',
+        basePrice: 35999,
+        images: [
+            'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Freidora de Aire SkyChef 6L',
-        description: 'Cocina saludable con aire caliente, panel digital y programas preconfigurados.',
-        code: 'SC-6L-007',
-        price: 79990,
-        stock: 13,
-        category: 'Electrohogar',
-        thumbnails: []
+        name: 'Deportes y Fitness',
+        codePrefix: 'SPORT',
+        baseName: 'Equipo Fitness',
+        basePrice: 52999,
+        images: [
+            'https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/4162487/pexels-photo-4162487.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     },
     {
-        title: 'Mochila Urbana Atlas Pro',
-        description: 'Compartimento para notebook 15.6, material impermeable y puertos externos.',
-        code: 'ATLAS-PRO-008',
-        price: 32990,
-        stock: 26,
-        category: 'Accesorios',
-        thumbnails: []
+        name: 'Belleza y Cuidado Personal',
+        codePrefix: 'BEAU',
+        baseName: 'Kit Cuidado Personal',
+        basePrice: 28999,
+        images: [
+            'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/3373739/pexels-photo-3373739.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Hogar, Muebles y Jardin',
+        codePrefix: 'HOME',
+        baseName: 'Producto Hogar',
+        basePrice: 118999,
+        images: [
+            'https://images.pexels.com/photos/2762247/pexels-photo-2762247.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Computacion',
+        codePrefix: 'COMP',
+        baseName: 'Equipo Computacion',
+        basePrice: 329999,
+        images: [
+            'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/250459/pexels-photo-250459.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Inmuebles',
+        codePrefix: 'INMO',
+        baseName: 'Publicacion Inmueble',
+        basePrice: 1299999,
+        images: [
+            'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Electronica, Audio y Video',
+        codePrefix: 'EAV',
+        baseName: 'Dispositivo Electronico',
+        basePrice: 249999,
+        images: [
+            'https://images.pexels.com/photos/3394665/pexels-photo-3394665.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
     }
 ];
+
+const buildProducts = () => {
+    const products = [];
+
+    CATEGORIES.forEach((categoryConfig) => {
+        VARIANTS.forEach((variant, idx) => {
+            const codeNumber = String(idx + 1).padStart(3, '0');
+            const price = Math.round(categoryConfig.basePrice * (1 + idx * 0.07));
+            const stock = 8 + (idx % 10) * 3;
+
+            products.push({
+                title: `${categoryConfig.baseName} ${variant}`,
+                description: `${categoryConfig.baseName} version ${variant} con excelente relacion precio-calidad para ${categoryConfig.name.toLowerCase()}.`,
+                code: `${categoryConfig.codePrefix}-${codeNumber}`,
+                price,
+                stock,
+                category: categoryConfig.name,
+                thumbnails: [categoryConfig.images[idx % categoryConfig.images.length]]
+            });
+        });
+    });
+
+    return products;
+};
 
 async function runSeedProducts() {
     try {
         await connDB(config.MONGODB_URI, config.DB_NAME);
 
+        const productsToSeed = buildProducts();
         let created = 0;
         let updated = 0;
 
-        for (const product of sampleProducts) {
+        for (const product of productsToSeed) {
             const existing = await productModel.findOne({ code: product.code });
 
             if (!existing) {
