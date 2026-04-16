@@ -9,123 +9,213 @@ const VARIANTS = ['Pro', 'Plus', 'Max', 'Lite', 'Urban', 'Prime', 'Edge', 'Go', 
 
 const CATEGORIES = [
     {
-        name: 'Autos, Motos y Otros',
-        codePrefix: 'AUTO',
-        baseName: 'Accesorio Auto',
-        basePrice: 78999,
+        name: 'Agro',
+        codePrefix: 'AGRO',
+        baseName: 'Producto Agro',
+        basePrice: 98999,
         images: [
-            'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/2132250/pexels-photo-2132250.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/2255935/pexels-photo-2255935.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Celulares y Telefonos',
-        codePrefix: 'CEL',
-        baseName: 'Smartphone',
-        basePrice: 699999,
+        name: 'Arte Libreria y Merceria',
+        codePrefix: 'ARTL',
+        baseName: 'Kit Arte',
+        basePrice: 35999,
         images: [
-            'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/102127/pexels-photo-102127.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/1329571/pexels-photo-1329571.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Electrodomesticos y Aires Ac.',
-        codePrefix: 'ELEC',
-        baseName: 'Electrodomestico',
-        basePrice: 189999,
-        images: [
-            'https://images.pexels.com/photos/4108712/pexels-photo-4108712.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/5824870/pexels-photo-5824870.jpeg?auto=compress&cs=tinysrgb&w=700'
-        ]
-    },
-    {
-        name: 'Herramientas',
-        codePrefix: 'TOOL',
-        baseName: 'Kit Herramientas',
-        basePrice: 64999,
+        name: 'Construccion',
+        codePrefix: 'CONS',
+        baseName: 'Herramienta Construccion',
+        basePrice: 86999,
         images: [
             'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=700',
             'https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Accesorios para Vehiculos',
-        codePrefix: 'VEH',
-        baseName: 'Accesorio Vehicular',
-        basePrice: 45999,
+        name: 'Industrias y Oficinas',
+        codePrefix: 'INDO',
+        baseName: 'Equipamiento Oficina',
+        basePrice: 75999,
         images: [
-            'https://images.pexels.com/photos/11139552/pexels-photo-11139552.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/1957477/pexels-photo-1957477.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/1111370/pexels-photo-1111370.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Ropa y Accesorios',
-        codePrefix: 'ROPA',
-        baseName: 'Prenda',
-        basePrice: 35999,
+        name: 'Alimentos y Bebidas',
+        codePrefix: 'ALIM',
+        baseName: 'Pack Alimentos',
+        basePrice: 15999,
         images: [
-            'https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/1295572/pexels-photo-1295572.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Deportes y Fitness',
-        codePrefix: 'SPORT',
-        baseName: 'Equipo Fitness',
-        basePrice: 52999,
+        name: 'Bebes',
+        codePrefix: 'BEBE',
+        baseName: 'Articulo Bebes',
+        basePrice: 42999,
         images: [
-            'https://images.pexels.com/photos/4397840/pexels-photo-4397840.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/4162487/pexels-photo-4162487.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/3933273/pexels-photo-3933273.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/3932946/pexels-photo-3932946.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Belleza y Cuidado Personal',
-        codePrefix: 'BEAU',
-        baseName: 'Kit Cuidado Personal',
-        basePrice: 28999,
+        name: 'Camaras y Accesorios',
+        codePrefix: 'CAMA',
+        baseName: 'Camara Digital',
+        basePrice: 245999,
         images: [
-            'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/3373739/pexels-photo-3373739.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Hogar, Muebles y Jardin',
-        codePrefix: 'HOME',
-        baseName: 'Producto Hogar',
-        basePrice: 118999,
+        name: 'Instrumentos Musicales',
+        codePrefix: 'MUSI',
+        baseName: 'Instrumento Musical',
+        basePrice: 119999,
         images: [
-            'https://images.pexels.com/photos/2762247/pexels-photo-2762247.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/164936/pexels-photo-164936.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Computacion',
-        codePrefix: 'COMP',
-        baseName: 'Equipo Computacion',
+        name: 'Antiguedades y Colecciones',
+        codePrefix: 'ANTI',
+        baseName: 'Pieza Coleccion',
+        basePrice: 88999,
+        images: [
+            'https://images.pexels.com/photos/707582/pexels-photo-707582.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/161154/fountain-pen-antique-old-writing-161154.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Consolas y Videojuegos',
+        codePrefix: 'GAME',
+        baseName: 'Consola Gaming',
         basePrice: 329999,
         images: [
-            'https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/250459/pexels-photo-250459.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/1298601/pexels-photo-1298601.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Inmuebles',
-        codePrefix: 'INMO',
-        baseName: 'Publicacion Inmueble',
-        basePrice: 1299999,
+        name: 'Entradas para Eventos',
+        codePrefix: 'EVEN',
+        baseName: 'Entrada Evento',
+        basePrice: 24999,
         images: [
-            'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     },
     {
-        name: 'Electronica, Audio y Video',
-        codePrefix: 'EAV',
-        baseName: 'Dispositivo Electronico',
-        basePrice: 249999,
+        name: 'Joyas y Relojes',
+        codePrefix: 'JOYA',
+        baseName: 'Reloj Premium',
+        basePrice: 147999,
         images: [
-            'https://images.pexels.com/photos/3394665/pexels-photo-3394665.jpeg?auto=compress&cs=tinysrgb&w=700',
-            'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&w=700'
+            'https://images.pexels.com/photos/1697214/pexels-photo-1697214.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/265856/pexels-photo-265856.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Juegos y Juguetes',
+        codePrefix: 'JUEG',
+        baseName: 'Juguete',
+        basePrice: 28999,
+        images: [
+            'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/163696/toy-train-track-wooden-163696.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Musica Peliculas y Series',
+        codePrefix: 'MPSR',
+        baseName: 'Edicion Coleccion',
+        basePrice: 31999,
+        images: [
+            'https://images.pexels.com/photos/1389429/pexels-photo-1389429.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/1208549/pexels-photo-1208549.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Souvenirs Cotillon y Fiestas',
+        codePrefix: 'SOUV',
+        baseName: 'Articulo Fiesta',
+        basePrice: 21999,
+        images: [
+            'https://images.pexels.com/photos/2072165/pexels-photo-2072165.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Libros Revistas y Comics',
+        codePrefix: 'LIBR',
+        baseName: 'Libro',
+        basePrice: 17999,
+        images: [
+            'https://images.pexels.com/photos/4861373/pexels-photo-4861373.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Salud y Equipamiento Medico',
+        codePrefix: 'SALU',
+        baseName: 'Equipo Medico',
+        basePrice: 68999,
+        images: [
+            'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/263402/pexels-photo-263402.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Televisores',
+        codePrefix: 'TVIS',
+        baseName: 'Smart TV',
+        basePrice: 459999,
+        images: [
+            'https://images.pexels.com/photos/6782565/pexels-photo-6782565.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/4009402/pexels-photo-4009402.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Mascotas',
+        codePrefix: 'MASC',
+        baseName: 'Producto Mascotas',
+        basePrice: 26999,
+        images: [
+            'https://images.pexels.com/photos/5745221/pexels-photo-5745221.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/7210754/pexels-photo-7210754.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Servicios',
+        codePrefix: 'SERV',
+        baseName: 'Servicio Especializado',
+        basePrice: 79999,
+        images: [
+            'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/5691613/pexels-photo-5691613.jpeg?auto=compress&cs=tinysrgb&w=700'
+        ]
+    },
+    {
+        name: 'Otras categorias',
+        codePrefix: 'OTRA',
+        baseName: 'Producto General',
+        basePrice: 78999,
+        images: [
+            'https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg?auto=compress&cs=tinysrgb&w=700',
+            'https://images.pexels.com/photos/794754/pexels-photo-794754.jpeg?auto=compress&cs=tinysrgb&w=700'
         ]
     }
 ];
@@ -159,25 +249,11 @@ async function runSeedProducts() {
         await connDB(config.MONGODB_URI, config.DB_NAME);
 
         const productsToSeed = buildProducts();
-        let created = 0;
-        let updated = 0;
-
-        for (const product of productsToSeed) {
-            const existing = await productModel.findOne({ code: product.code });
-
-            if (!existing) {
-                await productModel.create(product);
-                created += 1;
-                console.log(`Created: ${product.code}`);
-            } else {
-                await productModel.updateOne({ code: product.code }, { $set: product });
-                updated += 1;
-                console.log(`Updated: ${product.code}`);
-            }
-        }
+        await productModel.deleteMany({});
+        await productModel.insertMany(productsToSeed);
 
         const total = await productModel.countDocuments();
-        console.log(`Seed complete. Created: ${created}, Updated: ${updated}, Total products: ${total}`);
+        console.log(`Seed complete. Created: ${productsToSeed.length}, Updated: 0, Total products: ${total}`);
         process.exit(0);
     } catch (error) {
         console.error('Product seed failed:', error.message);

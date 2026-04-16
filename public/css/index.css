@@ -65,3 +65,18 @@
 /* Hide scrollbar on horizontal scroll containers */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Gentle zoom on product cards for mouse and touch */
+.product-zoom-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-zoom-media {
+    transition: transform 0.22s ease;
+    transform-origin: center;
+}
+
+.product-zoom-card:hover .product-zoom-media,
+.product-zoom-card:active .product-zoom-media {
+    transform: scale(1.04);
+}
