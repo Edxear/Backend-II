@@ -117,6 +117,12 @@ custom.get('/', async (req, res) => {
             products: mappedProducts,
             deals,
             categorySlides,
+            pagination: {
+                page: products.page,
+                totalPages: products.totalPages,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+            },
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
@@ -147,6 +153,12 @@ custom.get('/products', async (req, res) => {
             products: mappedProducts,
             deals,
             categorySlides,
+            pagination: {
+                page: products.page,
+                totalPages: products.totalPages,
+                hasPrevPage: products.hasPrevPage,
+                hasNextPage: products.hasNextPage,
+            },
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {

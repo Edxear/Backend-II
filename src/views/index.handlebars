@@ -156,14 +156,14 @@
                 <button id="cat-prev" type="button" class="hidden md:flex absolute -left-6 top-1/2 -translate-y-1/2 z-10 h-16 w-16 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-blue-500 text-3xl">‹</button>
                 <button id="cat-next" type="button" class="hidden md:flex absolute -right-6 top-1/2 -translate-y-1/2 z-10 h-16 w-16 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-blue-500 text-3xl">›</button>
 
-                <div class="relative min-h-[510px] md:min-h-[390px] overflow-hidden">
+                <div class="relative overflow-hidden">
                     {{#each categorySlides}}
-                    <div class="cat-slide absolute inset-0 transition-opacity duration-500 {{#if @first}}opacity-100{{else}}opacity-0 pointer-events-none{{/if}}">
+                    <div class="cat-slide transition-all duration-300 {{#if @first}}block{{else}}hidden{{/if}}">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                             {{#each this}}
-                            <a href="/products?category={{this.key}}" class="group border border-slate-200 rounded-[8px] overflow-hidden grid grid-cols-[120px_1fr] bg-[#f7f7f7] hover:shadow-md transition-shadow">
+                            <a href="/products?category={{this.key}}#catalogo-completo" class="group border border-slate-200 rounded-[10px] overflow-hidden grid grid-cols-[108px_1fr] bg-[#f7f7f7] hover:shadow-md hover:-translate-y-0.5 transition-all min-h-[110px]">
                                 <img src="{{this.imageUrl}}" alt="{{this.label}}" class="w-full h-full object-cover">
-                                <div class="p-4"><p class="font-semibold text-slate-800 group-hover:text-blue-600">{{this.label}}</p></div>
+                                <div class="p-4 flex items-center"><p class="font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">{{this.label}}</p></div>
                             </a>
                             {{/each}}
                         </div>
@@ -328,10 +328,10 @@
             </div>
         </section>
 
-        <section class="bg-white rounded-[6px] shadow-sm border border-slate-200 p-4 md:p-5 mb-8">
+        <section id="catalogo-completo" class="bg-white rounded-[6px] shadow-sm border border-slate-200 p-4 md:p-5 mb-8 scroll-mt-6">
             <div class="flex items-center justify-between mb-5 gap-3">
                 <h2 class="text-[26px] leading-none font-light text-slate-800">Catalogo completo</h2>
-                <span class="text-xs text-slate-500">Paginado</span>
+                <span class="text-xs text-slate-500">Pagina {{pagination.page}} de {{pagination.totalPages}}</span>
             </div>
 
             {{#if products.length}}
@@ -361,13 +361,16 @@
             </div>
             {{/if}}
 
-            <div class="flex justify-center gap-3 mt-7">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3 mt-7 border-t border-slate-100 pt-4">
+                <p class="text-xs text-slate-500">Navega por el catalogo sin perder esta seccion.</p>
+                <div class="flex justify-center gap-3">
                 {{#if prevLink.exist}}
-                <a href="{{prevLink.link}}" class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2 rounded text-sm">Anterior</a>
+                <a href="{{prevLink.link}}#catalogo-completo" class="bg-white hover:bg-slate-50 text-slate-700 font-bold px-5 py-2 rounded text-sm border border-slate-300">Anterior</a>
                 {{/if}}
                 {{#if nextLink.exist}}
-                <a href="{{nextLink.link}}" class="bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-2 rounded text-sm">Siguiente</a>
+                <a href="{{nextLink.link}}#catalogo-completo" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded text-sm">Siguiente</a>
                 {{/if}}
+                </div>
             </div>
         </section>
     </main>
@@ -489,9 +492,8 @@
     function showCatSlide(nextIndex) {
         catSlides.forEach((slide, idx) => {
             const isActive = idx === nextIndex;
-            slide.classList.toggle('opacity-100', isActive);
-            slide.classList.toggle('opacity-0', !isActive);
-            slide.classList.toggle('pointer-events-none', !isActive);
+            slide.classList.toggle('block', isActive);
+            slide.classList.toggle('hidden', !isActive);
         });
 
         [...catDotButtonsDesktop, ...catDotButtonsMobile].forEach((dot, idx) => {
