@@ -28,8 +28,10 @@ const CATEGORY_ICONS = {
 const SALE_DISCOUNTS = [15, 20, 25, 30, 35];
 
 const buildHomeData = (mappedProducts) => {
-    // "Ofertas del día": primeros 5 productos con descuentos de ejemplo
-    const deals = mappedProducts.slice(0, 5).map((p, i) => {
+    const shuffledProducts = [...mappedProducts].sort(() => Math.random() - 0.5);
+
+    // "Ofertas del día": 5 productos aleatorios con descuentos de ejemplo
+    const deals = shuffledProducts.slice(0, 5).map((p, i) => {
         const pct = SALE_DISCOUNTS[i];
         const originalPrice = Math.round((Number(p.price) || 0) * (100 / (100 - pct)));
         return {
@@ -48,7 +50,17 @@ const buildHomeData = (mappedProducts) => {
         if (catMap[cat].length < 4) catMap[cat].push(p);
     });
 
-    const categoryGroups = Object.entries(catMap).map(([name, products]) => ({
+    const preferredAreas = ['Celulares', 'Electronica', 'Calzado', 'Computacion', 'Gaming', 'Audio'];
+    const sortedEntries = Object.entries(catMap).sort(([a], [b]) => {
+        const ai = preferredAreas.indexOf(a);
+        const bi = preferredAreas.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+    });
+
+    const categoryGroups = sortedEntries.map(([name, products]) => ({
         name,
         icon: CATEGORY_ICONS[name] || '🛍️',
         products
@@ -98,7 +110,9 @@ custom.get('/', async (req, res) => {
             style: 'index.css',
             products: mappedProducts,
             deals,
+            hasDeals: deals.length > 0,
             categoryGroups,
+            hasCategoryGroups: categoryGroups.length > 0,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
@@ -121,11 +135,16 @@ custom.get('/products', async (req, res) => {
     try {
         const products = await productService.getAll(req.query);
         const mappedProducts = mapProductsForView(JSON.parse(JSON.stringify(products.docs)));
+        const { deals, categoryGroups } = buildHomeData(mappedProducts);
 
         res.render('index', {
             title: 'Productos',
             style: 'index.css',
             products: mappedProducts,
+            deals,
+            hasDeals: deals.length > 0,
+            categoryGroups,
+            hasCategoryGroups: categoryGroups.length > 0,
             user: req.user,
             isLoggedIn: !!req.user,
             prevLink: {
