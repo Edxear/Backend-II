@@ -60,6 +60,25 @@ const chunkArray = (arr, chunkSize) => {
     return chunks;
 };
 
+const buildCategorySlides = () => {
+    const targetSlides = 3;
+    const cardsPerSlide = 8;
+    const chunkSize = Math.ceil(CATEGORY_CARDS.length / targetSlides);
+
+    return chunkArray(CATEGORY_CARDS, chunkSize).map((slide) => {
+        const filledSlide = [...slide];
+        while (filledSlide.length < cardsPerSlide) {
+            filledSlide.push({
+                key: '',
+                label: 'Explorar mas categorias',
+                imageUrl: 'https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg?auto=compress&cs=tinysrgb&w=400',
+                isPlaceholder: true
+            });
+        }
+        return filledSlide;
+    });
+};
+
 const buildHomeData = (mappedProducts) => {
     const deals = SHOWCASE_OFFERS.map((offer) => {
         const originalPrice = Math.round(offer.price * (100 / (100 - offer.discountPct)));
@@ -70,7 +89,7 @@ const buildHomeData = (mappedProducts) => {
         };
     });
 
-    const categorySlides = chunkArray(CATEGORY_CARDS, 7);
+    const categorySlides = buildCategorySlides();
 
     return { deals, categorySlides };
 };

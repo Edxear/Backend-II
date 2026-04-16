@@ -161,10 +161,17 @@
                     <div class="cat-slide transition-all duration-300 {{#if @first}}block{{else}}hidden{{/if}}">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                             {{#each this}}
-                            <a href="/products?category={{this.key}}#catalogo-completo" class="group border border-slate-200 rounded-[10px] overflow-hidden grid grid-cols-[108px_1fr] bg-[#f7f7f7] hover:shadow-md hover:-translate-y-0.5 transition-all min-h-[110px]">
+                            {{#if this.isPlaceholder}}
+                            <a href="/products#catalogo-completo" class="group border border-dashed border-slate-300 rounded-[10px] overflow-hidden grid grid-cols-[108px_1fr] bg-slate-50 hover:shadow-md hover:-translate-y-0.5 transition-all h-[110px]">
+                                <img src="{{this.imageUrl}}" alt="{{this.label}}" class="w-full h-full object-cover opacity-75">
+                                <div class="p-4 flex items-center"><p class="font-semibold text-slate-600 group-hover:text-blue-600 leading-tight">{{this.label}}</p></div>
+                            </a>
+                            {{else}}
+                            <a href="/products?category={{this.key}}#catalogo-completo" class="group border border-slate-200 rounded-[10px] overflow-hidden grid grid-cols-[108px_1fr] bg-[#f7f7f7] hover:shadow-md hover:-translate-y-0.5 transition-all h-[110px]">
                                 <img src="{{this.imageUrl}}" alt="{{this.label}}" class="w-full h-full object-cover">
                                 <div class="p-4 flex items-center"><p class="font-semibold text-slate-800 group-hover:text-blue-600 leading-tight">{{this.label}}</p></div>
                             </a>
+                            {{/if}}
                             {{/each}}
                         </div>
                     </div>
@@ -335,7 +342,7 @@
             </div>
 
             {{#if products.length}}
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {{#each products}}
                 <article class="product-zoom-card border border-slate-200 rounded-[6px] overflow-hidden bg-white hover:shadow-md transition-shadow touch-manipulation">
                     <img src="{{this.imageUrl}}" alt="{{this.title}}" loading="lazy" class="product-zoom-media w-full aspect-square object-cover">
