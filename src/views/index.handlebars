@@ -190,20 +190,20 @@
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                 {{#each deals}}
-                <article class="product-zoom-card border border-slate-200 rounded-[6px] overflow-hidden hover:shadow-lg transition-shadow bg-white touch-manipulation">
+                <article class="product-zoom-card border border-slate-200 rounded-[8px] overflow-hidden hover:shadow-lg transition-all bg-white touch-manipulation h-full flex flex-col">
                     <div class="relative">
                         <img src="{{this.imageUrl}}" alt="{{this.title}}" loading="lazy" class="product-zoom-media w-full aspect-square object-cover">
-                        <span class="absolute top-2 left-2 bg-[#ff7733] text-white text-[10px] font-bold px-2 py-1 rounded">{{this.discountPct}}% OFF</span>
+                        <span class="absolute top-2 left-2 bg-[#ff7733] text-white text-[11px] font-extrabold px-2.5 py-1 rounded">{{this.discountPct}}% OFF</span>
                     </div>
-                    <div class="p-3">
-                        <p class="text-xs text-slate-400 line-through">ARS {{this.originalFormattedPrice}}</p>
-                        <p class="text-[24px] font-light text-slate-900 leading-none mt-1">ARS {{this.formattedPrice}}</p>
-                        <p class="text-xs text-emerald-600 mt-1 font-semibold">{{this.discountPct}}% OFF</p>
+                    <div class="p-3.5 flex-1 flex flex-col">
+                        <p class="text-sm text-slate-400 line-through">ARS {{this.originalFormattedPrice}}</p>
+                        <p class="text-[20px] md:text-[22px] font-semibold text-slate-900 leading-none mt-1 tracking-tight">ARS {{this.formattedPrice}}</p>
+                        <p class="text-sm text-emerald-600 mt-1 font-bold">{{this.discountPct}}% OFF</p>
                         {{#if this.freeShipping}}
-                        <p class="text-xs text-emerald-600 mt-1">Envio gratis</p>
+                        <p class="text-sm text-emerald-600 mt-1.5 font-semibold">Envio gratis</p>
                         {{/if}}
-                        <p class="text-xs text-slate-500 mt-2 line-clamp-2 min-h-[2rem]">{{this.title}}</p>
-                        <button class="mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded">Ver oferta</button>
+                        <p class="text-[18px] text-slate-700 mt-3 leading-tight line-clamp-2 min-h-[3.2rem]">{{this.title}}</p>
+                        <button class="mt-auto pt-4 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm md:text-base font-bold py-2.5 rounded">Ver oferta</button>
                     </div>
                 </article>
                 {{/each}}
