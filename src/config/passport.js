@@ -2,8 +2,11 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import JwtStrategy from 'passport-jwt';
-import User from '../dao/models/userModel.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import UserMemoryManager from '../dao/userMemoryManager.js';
+
+const userManager = new UserMemoryManager();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
@@ -46,24 +49,20 @@ passport.use('register', new LocalStrategy({
         const { first_name, last_name, age } = req.body; 
         
         // Verificar si el usuario ya existe
-        const existingUser = await User.findOne({ email });
+        const existingUser = await userManager.findByEmail(email);
         if (existingUser) {
             return done(null, false, { message: 'El email ya está registrado' });
         }
 
-        // Hash de la contraseña
-        const hashedPassword = await bcrypt.hash(password, 10);
-
         // Crear nuevo usuario
-        const newUser = new User({
+        const newUser = await userManager.create({
             first_name,
             last_name,
             email,
             age,
-            password: hashedPassword
+            password,
         });
 
-        await newUser.save();
         return done(null, newUser);
     } catch (error) {
         return done(error);
@@ -88,7 +87,7 @@ passport.use('login', new LocalStrategy({
         }
 
         // Buscar usuario en la BD.
-        const user = await User.findOne({ email });
+        const user = await userManager.findByEmail(email);
         if (!user) {
             return done(null, false, { message: 'Credenciales inválidas' });
         }
@@ -113,21 +112,20 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
         callbackURL: process.env.GITHUB_CALLBACK_URL || "http://localhost:8080/api/sessions/github/callback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            let user = await User.findOne({ email: profile.emails[0].value });
+            let user = await userManager.findByEmail(profile.emails[0].value);
 
             if (user) {
                 return done(null, user);
             } else {
-                const newUser = new User({
+                const newUser = await userManager.create({
                     first_name: profile.displayName.split(' ')[0] || profile.username,
                     last_name: profile.displayName.split(' ').slice(1).join(' ') || '',
                     email: profile.emails[0].value,
                     age: 0, 
-                    password: '', 
-                    role: 'usuario'
+                    password: crypto.randomBytes(16).toString('hex'),
+                    role: 'user'
                 });
 
-                await newUser.save();
                 return done(null, newUser);
             }
         } catch (error) {
@@ -154,7 +152,7 @@ passport.deserializeUser(async (id, done) => {
             return done(null, adminUser);
         }
 
-        const user = await User.findById(id);
+        const user = await userManager.findById(id);
         done(null, user);
     } catch (error) {
         done(error);

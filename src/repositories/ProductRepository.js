@@ -1,8 +1,8 @@
-import productDBManager from '../dao/productDBManager.js';
+import productMemoryManager from '../dao/productMemoryManager.js';
 
 class ProductRepository {
     constructor() {
-        this.dao = new productDBManager();
+        this.dao = new productMemoryManager();
     }
 
     async getAll(params) {

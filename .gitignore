@@ -2,5 +2,7 @@
 **/package-lock.json
 /public/img/**
 products.json
+!src/data/products.json
 carts.json
 .env
+logs/

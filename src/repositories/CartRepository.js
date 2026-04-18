@@ -1,4 +1,4 @@
-import cartDBManager from '../dao/cartDBManager.js';
+import cartMemoryManager from '../dao/cartMemoryManager.js';
 import ProductRepository from './ProductRepository.js';
 import TicketRepository from './TicketRepository.js';
 import emailService from '../services/emailService.js';
@@ -7,7 +7,7 @@ class CartRepository {
     constructor() {
         this.productRepo = new ProductRepository();
         this.ticketRepo = new TicketRepository();
-        this.dao = new cartDBManager(this.productRepo.dao);
+        this.dao = new cartMemoryManager(this.productRepo.dao);
     }
 
     async getAll() {
@@ -59,17 +59,18 @@ class CartRepository {
 
         for (const item of cart.products) {
             const product = item.product;
+            const productId = String(product._id ?? product.id);
             if (product.stock >= item.quantity) {
                 // Reduce stock
-                await this.productRepo.reduceStock(product._id, item.quantity);
+                await this.productRepo.reduceStock(productId, item.quantity);
                 total += product.price * item.quantity;
                 purchasedProducts.push({
-                    product: product._id,
+                    product: productId,
                     quantity: item.quantity,
                     price: product.price
                 });
             } else {
-                failedProducts.push(product._id);
+                failedProducts.push(productId);
             }
         }
 
@@ -98,7 +99,7 @@ class CartRepository {
 
             // Clear purchased products from cart
             const remainingProducts = cart.products.filter(item => 
-                failedProducts.includes(item.product._id.toString())
+                failedProducts.includes(String(item.product._id ?? item.product.id))
             );
             await this.dao.updateAllProducts(cartId, remainingProducts);
 

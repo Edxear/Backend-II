@@ -1,29 +1,25 @@
-import ticketModel from '../dao/models/ticketModel.js';
-import crypto from 'crypto';
+import ticketMemoryManager from '../dao/ticketMemoryManager.js';
 
 class TicketRepository {
+    constructor() {
+        this.dao = new ticketMemoryManager();
+    }
+
     async create(purchaseData) {
         const { amount, purchaser, products } = purchaseData;
-        const code = crypto.randomBytes(8).toString('hex').toUpperCase();
-
-        return await ticketModel.create({
-            code,
-            amount,
-            purchaser,
-            products
-        });
+        return await this.dao.create({ amount, purchaser, products });
     }
 
     async findById(id) {
-        return await ticketModel.findById(id).populate('products.product');
+        return await this.dao.findById(id);
     }
 
     async findByCode(code) {
-        return await ticketModel.findOne({ code });
+        return await this.dao.findByCode(code);
     }
 
     async findAll() {
-        return await ticketModel.find().populate('products.product');
+        return await this.dao.findAll();
     }
 }
 

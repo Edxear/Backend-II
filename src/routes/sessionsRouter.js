@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import CustomRouter from '../utils/customRouter.js';
-import UserDBManager from '../dao/userDBManager.js';
 import { handlePolicies, authMiddleware } from '../middleware/auth.js';
 import passport from 'passport';
 import UserDTO from '../dtos/UserDTO.js';
@@ -8,8 +7,8 @@ import UserRepository from '../repositories/UserRepository.js';
 import emailService from '../services/emailService.js';
 
 const custom = new CustomRouter();
-const userManager = new UserDBManager();
 const userRepo = new UserRepository();
+const userManager = userRepo.dao;
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 

@@ -1,11 +1,10 @@
-import UserDBManager from '../dao/userDBManager.js';
-import UserModel from '../dao/models/userModel.js';
+import UserMemoryManager from '../dao/userMemoryManager.js';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
 class UserRepository {
     constructor() {
-        this.dao = new UserDBManager();
+        this.dao = new UserMemoryManager();
     }
 
     async create(userData) {
@@ -56,10 +55,7 @@ class UserRepository {
     }
 
     async resetPassword(token, newPassword) {
-        const user = await UserModel.findOne({
-            resetPasswordToken: token,
-            resetPasswordExpires: { $gt: Date.now() }
-        });
+        const user = await this.dao.findByResetToken(token);
 
         if (!user) throw new Error('Invalid or expired token');
 

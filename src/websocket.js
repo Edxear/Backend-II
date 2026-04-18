@@ -1,5 +1,5 @@
-import productDBManager from './dao/productDBManager.js';
-const ProductService = new productDBManager();
+import productMemoryManager from './dao/productMemoryManager.js';
+const ProductService = new productMemoryManager();
 
 export default (io) => {
     io.on("connection", (socket) => {
@@ -17,7 +17,7 @@ export default (io) => {
 
         socket.on("deleteProduct", async (data) => {
             try {
-                const result = await ProductService.deleteProduct(data.pid);
+                await ProductService.deleteProduct(data.pid);
                 const products = await ProductService.getAllProducts({});
                 socket.emit("publishProducts", products.docs);
             } catch (error) {
